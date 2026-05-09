@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prodotti Digitali — Paola al Vento</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── Override / integrazione per la pagina digitale ── */
+
+    :root {
+      --rosa:    #e72f72;
+      --lime:    #caff1d;
+      --viola:   #f490ff;
+      --nero:    #111111;
+      --crema:   #f9f4ee;
+      --grigio:  #2a2a2a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--crema);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--nero);
+      overflow-x: hidden;
+    }
+
+    /* ── Navbar (clone da style.css originale) ── */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 3rem;
+      background: var(--nero);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--crema);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .special-text { color: var(--rosa); }
+    .special-font { font-style: italic; font-family: 'Cormorant Garamond', serif; }
+    .navbar nav ul { list-style: none; display: flex; gap: 2rem; }
+    .navbar nav ul li a {
+      color: var(--crema);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .14em;
+      transition: color .2s;
+    }
+    .navbar nav ul li a:hover { color: var(--lima); color: var(--lime); }
+
+    /* ── Hero ── */
+    .hero-digitale {
+      min-height: 80vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-testo {
+      background: var(--nero);
+      color: var(--crema);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem;
+      position: relative;
+    }
+    .hero-testo::after {
+      content: '';
+      position: absolute;
+      right: -40px;
+      top: 0; bottom: 0;
+      width: 80px;
+      background: var(--nero);
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+      z-index: 2;
+    }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .2em;
+      color: var(--lime);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .hero-digitale h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      color: var(--crema);
+    }
+    .hero-digitale h1 em {
+      font-style: italic;
+      color: var(--rosa);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #aaa;
+      max-width: 380px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--lime);
+      color: var(--nero);
+      font-family: 'Space Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .15em;
+      padding: .9rem 2.2rem;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background .2s, transform .2s;
+    }
+    .hero-cta:hover { background: var(--rosa); color: #fff; transform: translateY(-2px); }
+
+    .hero-visual {
+      background: var(--rosa);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-visual .grid-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .floating-cards {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transform: rotate(-4deg);
+    }
+    .mini-card {
+      background: #fff;
+      width: 220px;
+      padding: 1rem 1.2rem;
+      border-left: 4px solid var(--nero);
+      box-shadow: 6px 6px 0 var(--nero);
+      transform-origin: center;
+      animation: float 3s ease-in-out infinite;
+    }
+    .mini-card:nth-child(2) { transform: translateX(30px); animation-delay: .5s; }
+    .mini-card:nth-child(3) { transform: translateX(10px); animation-delay: 1s; }
+    .mini-card .card-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+    .mini-card h4 { font-family: 'Space Mono', monospace; font-size: .65rem; letter-spacing: .1em; color: var(--nero); text-transform: uppercase; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(var(--tx, 0)); }
+      50% { transform: translateY(-8px) translateX(var(--tx, 0)); }
+    }
+    .mini-card:nth-child(2) { --tx: 30px; }
+    .mini-card:nth-child(3) { --tx: 10px; }
+
+    /* ── Fascia scorrente ── */
+    .fascia-sottile {
+      background: var(--lima);
+      background: var(--lime);
+      overflow: hidden;
+      padding: .55rem 0;
+      white-space: nowrap;
+    }
+    .testo-scorrente {
+      display: inline-block;
+      animation: scroll-left 18s linear infinite;
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: var(--nero);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Sezioni prodotti ── */
+    .sezione-digitale {
+      padding: 6rem 3rem;
+    }
+    .sezione-digitale:nth-child(odd) { background: var(--crema); }
+    .sezione-digitale:nth-child(even) { background: #fff; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 2px solid var(--nero);
+      padding-bottom: 1rem;
+    }
+    .section-number {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      color: var(--rosa);
+      letter-spacing: .2em;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-style: italic;
+    }
+    .section-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .18em;
+      color: #888;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+
+    /* ── Grid card prodotti ── */
+    .prodotti-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .card-digitale {
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+      cursor: pointer;
+    }
+    .card-digitale:hover {
+      transform: translateY(-6px);
+      box-shadow: 8px 8px 0 var(--nero);
+    }
+    .card-digitale .card-thumb {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-digitale .card-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: .12;
+      background-image: repeating-linear-gradient(
+        45deg,
+        #000 0, #000 1px,
+        transparent 0, transparent 50%
+      );
+      background-size: 8px 8px;
+    }
+    .card-digitale.colore-rosa  .card-thumb { background: #fce4ec; }
+    .card-digitale.colore-lime  .card-thumb { background: #f0ffd0; }
+    .card-digitale.colore-viola .card-thumb { background: #f9e5ff; }
+    .card-digitale.colore-nero  .card-thumb { background: var(--nero); }
+    .card-digitale.colore-arancio .card-thumb { background: #fff3e0; }
+
+    .card-body { padding: 1.2rem 1.3rem 1.4rem; }
+    .card-categoria {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .18em;
+      color: var(--rosa);
+      text-transform: uppercase;
+      margin-bottom: .4rem;
+    }
+    .card-digitale h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: .5rem;
+      line-height: 1.3;
+    }
+    .card-digitale p {
+      font-size: .95rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-prezzo {
+      font-family: 'Space Mono', monospace;
+      font-size: .95rem;
+      font-weight: 700;
+    }
+    .badge-gratis {
+      background: var(--lime);
+      color: var(--nero);
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .1em;
+      padding: .25rem .6rem;
+      font-weight: 700;
+    }
+    .btn-scheda {
+      background: var(--nero);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .12em;
+      padding: .5rem 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-scheda:hover { background: var(--rosa); }
+
+    /* ── Sezione siti web: layout editoriale ── */
+    .siti-lista {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .sito-card {
+      border: 2px solid var(--nero);
+      padding: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      background: #fff;
+      transition: background .2s, transform .2s;
+      text-decoration: none;
+      color: var(--nero);
+    }
+    .sito-card:hover {
+      background: var(--nero);
+      color: var(--crema);
+      transform: translateX(6px);
+    }
+    .sito-card:hover .sito-url { color: var(--lime); }
+    .sito-card:hover .sito-tag { background: var(--rosa); color: #fff; }
+    .sito-numero {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-style: italic;
+      line-height: 1;
+      opacity: .15;
+      min-width: 50px;
+    }
+    .sito-info { flex: 1; }
+    .sito-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .15em;
+      background: var(--lime);
+      color: var(--nero);
+      padding: .2rem .55rem;
+      margin-bottom: .6rem;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .sito-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      margin-bottom: .4rem;
+    }
+    .sito-info p { font-size: .92rem; line-height: 1.6; opacity: .8; }
+    .sito-url {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      color: var(--rosa);
+      display: block;
+      margin-top: .7rem;
+      letter-spacing: .1em;
+    }
+
+    /* ── Sezione adesivi ── */
+    .adesivi-showcase {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .adesivi-descrizione { flex: 1; }
+    .adesivi-descrizione p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    .adesivi-gallery {
+      flex: 1.2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .adesivo-item {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 4px 4px 0 var(--nero);
+      transition: transform .2s;
+      cursor: pointer;
+    }
+    .adesivo-item:hover { transform: scale(1.08) rotate(5deg); }
+    .adesivo-item:nth-child(1)  { background: #fce4ec; }
+    .adesivo-item:nth-child(2)  { background: #f0ffd0; }
+    .adesivo-item:nth-child(3)  { background: #e8f5e9; }
+    .adesivo-item:nth-child(4)  { background: #e3f2fd; }
+    .adesivo-item:nth-child(5)  { background: #f9e5ff; }
+    .adesivo-item:nth-child(6)  { background: #fff9c4; }
+    .adesivo-item:nth-child(7)  { background: #fbe9e7; }
+    .adesivo-item:nth-child(8)  { background: #ede7f6; }
+    .adesivo-item:nth-child(9)  { background: #fce4ec; }
+
+    /* ── CTA finale ── */
+    .cta-finale {
+      background: var(--nero);
+      color: var(--crema);
+      padding: 6rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+    .cta-finale h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-style: italic;
+      max-width: 500px;
+      line-height: 1.15;
+    }
+    .cta-finale h2 span { color: var(--rosa); }
+    .cta-destra { display: flex; flex-direction: column; gap: 1rem; align-items: flex-end; }
+    .cta-finale a {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .15em;
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      transition: .2s;
+    }
+    .btn-shop { background: var(--lime); color: var(--nero); }
+    .btn-shop:hover { background: var(--viola); color: var(--nero); }
+    .btn-contatti { border: 1.5px solid #555; color: var(--crema); }
+    .btn-contatti:hover { border-color: var(--rosa); color: var(--rosa); }
+    .cta-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-style: italic;
+      color: var(--rosa);
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .15em;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    /* ── Footer ── */
+    .footer-band {
+      background: var(--rosa);
+      height: 8px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .hero-digitale { grid-template-columns: 1fr; }
+      .hero-testo::after { display: none; }
+      .hero-visual { min-height: 300px; }
+      .siti-lista { grid-template-columns: 1fr; }
+      .adesivi-showcase { flex-direction: column; }
+      .cta-finale { flex-direction: column; align-items: flex-start; }
+      .cta-destra { align-items: flex-start; }
+      .navbar { padding: 1rem 1.2rem; }
+      .navbar nav ul { gap: 1rem; }
+      .sezione-digitale { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <header>
+    <div class="navbar" id="navbar-digitale">
+      <a href="index.html" class="logo special-text">P<span class="special-font">ao</span>l<span class="special-font">a a</span>l V<span class="special-font">e</span>nt<span class="special-font">o</span></a>
+      <nav>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="#">PRODOTTI</a></li>
+          <li><a href="index.html#about-me">SU DI ME</a></li>
+          <li><a href="index.html#sezione-contatti">CONTATTI</a></li>
+          <li><a href="#">SHOP</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero-digitale">
+    <div class="hero-testo">
+      <p class="hero-tag">✦ Risorse digitali per la didattica</p>
+      <h1>Prodotti<br><em>Digitali</em></h1>
+      <p class="hero-sub">
+        Template per lezioni, giochi didattici, illustrazioni e siti interattivi — tutto pensato con la cura artigianale di chi insegna ogni giorno.
+      </p>
+      <a href="#templates" class="hero-cta">ESPLORA LE RISORSE ↓</a>
+    </div>
+
+    <div class="hero-visual">
+      <div class="grid-pattern"></div>
+      <div class="floating-cards">
+        <a class="mini-card" href="#templates" title="Vai ai lesson templates">
+          <div class="card-icon">📄</div>
+          <h4>Lesson Templates</h4>
+        </a>
+        <a class="mini-card" href="#giochi" title="Vai ai game templates">
+          <div class="card-icon">🎮</div>
+          <h4>Game Templates</h4>
+        </a>
+        <a class="mini-card" href="#siti" title="Vai ai siti didattici">
+          <div class="card-icon">🌐</div>
+          <h4>Didactic Websites</h4>
+        </a>
+        <a class="mini-card" href="slides.html" title="Vai alle slide presentazioni">
+          <div class="card-icon">📑</div>
+          <h4>Slide Presentazioni</h4>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Fascia scorrente ── -->
+  <div class="fascia-sottile">
+    <div class="testo-scorrente">
+      HANDMADE CON AMORE DIGITALE — TEMPLATE PRONTI ALL'USO — GIOCHI PER OGNI LIVELLO CEFR — ILLUSTRAZIONI ORIGINALI — SITI INTERATTIVI — HANDMADE CON AMORE DIGITALE — TEMPLATE PRONTI ALL'USO — GIOCHI PER OGNI LIVELLO CEFR — ILLUSTRAZIONI ORIGINALI — SITI INTERATTIVI —&nbsp;
+    </div>
+  </div>
+
+
+  <!-- ──────────────────────────────────────
+       SEZIONE 1 · TEMPLATE LEZIONI
+  ────────────────────────────────────── -->
+  <section class="sezione-digitale" id="templates">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Template Lezioni</h2>
+      <span class="section-subtitle">Stampabili · PDF · Word</span>
+    </div>
+
+    <div class="prodotti-grid">
+
+      <div class="card-digitale colore-rosa">
+        <div class="card-thumb">📝</div>
+        <div class="card-body">
+          <p class="card-categoria">Lesson Plan</p>
+          <h3>CELTA-Style Lesson Plan</h3>
+          <p>Template professionale per pianificazione lezioni con sezioni aims, staging, CCQs e anticipated problems.</p>
+          <div class="card-footer">
+            <span class="card-prezzo"><span class="badge-gratis">GRATIS</span></span>
+            <a href="#" class="btn-scheda">SCARICA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-lime">
+        <div class="card-thumb">🌿</div>
+        <div class="card-body">
+          <p class="card-categoria">CLIL · Storia</p>
+          <h3>Witch Hunt — Caccia alle Streghe</h3>
+          <p>Unità CLIL completa: schede personaggio, jigsaw activity, dialoghi grammaticali. Prima media, A2.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€4.50</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-viola">
+        <div class="card-thumb">🧠</div>
+        <div class="card-body">
+          <p class="card-categoria">CLIL · Psicologia</p>
+          <h3>Feel It, Name It, Tame It</h3>
+          <p>Unità sulle emozioni con neuroscienza e CBT. Widget LIM interattivi inclusi. Seconda e terza media.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€5.00</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-arancio">
+        <div class="card-thumb">📖</div>
+        <div class="card-body">
+          <p class="card-categoria">Letteratura · B1</p>
+          <h3>1984 — Dystopian Language</h3>
+          <p>Materiali CELTA-style su Orwell: red flags, Newspeak e connessioni col presente. Terza media, B1.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€4.50</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-rosa">
+        <div class="card-thumb">🎵</div>
+        <div class="card-body">
+          <p class="card-categoria">Music · B1</p>
+          <h3>Do I Wanna Know? — Arctic Monkeys</h3>
+          <p>Lezione completa con ascolto, lyric gap-fill, grammar focus (modal verbs) e attività estensive.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€3.50</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-lime">
+        <div class="card-thumb">🍎</div>
+        <div class="card-body">
+          <p class="card-categoria">Food Unit · A2</p>
+          <h3>Harvard Healthy Plate</h3>
+          <p>Schede stampabili: piatto sano, shopping list, meal planner e indefinite adjectives. Seconda media.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€3.00</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ──────────────────────────────────────
+       SEZIONE 2 · GAME TEMPLATES
+  ────────────────────────────────────── -->
+  <section class="sezione-digitale" id="giochi">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Template Giochi Didattici</h2>
+      <span class="section-subtitle">HTML · Stampabile · LIM</span>
+    </div>
+
+    <div class="prodotti-grid">
+
+      <div class="card-digitale colore-nero">
+        <div class="card-thumb" style="font-size:3rem;">🪿</div>
+        <div class="card-body">
+          <p class="card-categoria" style="color:var(--lime);">Goose Game · HTML</p>
+          <h3 style="color:#fff;">The Goose Game Platform</h3>
+          <p style="color:#aaa;">Gioco dell'oca interattivo per LIM con categorie personalizzabili: storia, letteratura, grammatica. Plug & play.</p>
+          <div class="card-footer">
+            <span class="card-prezzo" style="color:#fff;">€8.00</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-rosa">
+        <div class="card-thumb">🎤</div>
+        <div class="card-body">
+          <p class="card-categoria">Quiz · B1</p>
+          <h3>LyricSwap — Sarabanda Edition</h3>
+          <p>Quiz musicale web: 17 canzoni, indovinelli di testo, punteggio e timer. Perfetto per fine unità.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€5.00</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-viola">
+        <div class="card-thumb">🃏</div>
+        <div class="card-body">
+          <p class="card-categoria">Emozioni · Tutte le età</p>
+          <h3>Coping Crew — Card Game</h3>
+          <p>Gioco CBT con carte delle emozioni, strategie di coping e scenari. PDF stampabile in A4/A5.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€4.50</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-lime">
+        <div class="card-thumb">💰</div>
+        <div class="card-body">
+          <p class="card-categoria">Economia · Gamification</p>
+          <h3>SchoolBank — Classroom Economy</h3>
+          <p>Sistema di economia virtuale con NFC e Firebase. Template completo con carte e interfaccia web.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€12.00</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-arancio">
+        <div class="card-thumb">🔤</div>
+        <div class="card-body">
+          <p class="card-categoria">Grammar · A2–B1</p>
+          <h3>Grammar Games Bundle</h3>
+          <p>3 giochi HTML interattivi: Present Simple, verbi irregolari, pronomi relativi. Pronti per la LIM.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€6.00</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-digitale colore-rosa">
+        <div class="card-thumb">🎲</div>
+        <div class="card-body">
+          <p class="card-categoria">Dixit-Style · Psicologia</p>
+          <h3>Psychology Card Game</h3>
+          <p>Gioco multiplayer in stile Dixit con carte psicologiche per discussioni in classe. HTML + printable.</p>
+          <div class="card-footer">
+            <span class="card-prezzo">€5.50</span>
+            <a href="#" class="btn-scheda">ACQUISTA</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ──────────────────────────────────────
+       SEZIONE 3 · ILLUSTRAZIONI / ADESIVI
+  ────────────────────────────────────── -->
+  <section class="sezione-digitale" id="adesivi">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Illustrazioni & Adesivi</h2>
+      <span class="section-subtitle">Cricut · SVG · PNG</span>
+    </div>
+
+    <div class="adesivi-showcase">
+      <div class="adesivi-descrizione">
+        <p>
+          Ogni illustrazione nasce dalla mia Cricut e da anni di sperimentazione con carta, colori e forme. File pronti per stampa e taglio — formato SVG, PNG ad alta risoluzione e PDF.
+        </p>
+        <p>
+          Perfetti per decorare quaderni, agende, buste, pacchi regalo — o semplicemente per esprimere un'idea con un tocco creativo.
+        </p>
+        <a href="#" class="btn-scheda" style="font-size:.72rem; padding:.8rem 1.8rem;">ESPLORA TUTTO IL CATALOGO →</a>
+      </div>
+
+      <div class="adesivi-gallery">
+        <div class="adesivo-item" title="Fiori essiccati">🌸</div>
+        <div class="adesivo-item" title="Libro aperto">📚</div>
+        <div class="adesivo-item" title="Foglia">🌿</div>
+        <div class="adesivo-item" title="Stella">⭐</div>
+        <div class="adesivo-item" title="Cuore">🤍</div>
+        <div class="adesivo-item" title="Luna">🌙</div>
+        <div class="adesivo-item" title="Fiamma ceralacca">🕯️</div>
+        <div class="adesivo-item" title="Aquilone">🪁</div>
+        <div class="adesivo-item" title="Penna">✒️</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ──────────────────────────────────────
+       SEZIONE 4 · SITI WEB DIDATTICI
+  ────────────────────────────────────── -->
+  <section class="sezione-digitale" id="siti">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Siti Web Didattici</h2>
+      <span class="section-subtitle">HTML · Firebase · Open Access</span>
+    </div>
+
+    <div class="siti-lista">
+
+      <a href="#" class="sito-card">
+        <div class="sito-numero">01</div>
+        <div class="sito-info">
+          <span class="sito-tag">CLIL · Storia</span>
+          <h3>Witch Hunt</h3>
+          <p>Sito interattivo a tre file (HTML/CSS/JS) con hash-based routing per l'unità sulla Caccia alle Streghe. Prima media, A2.</p>
+          <span class="sito-url">↗ vai al sito</span>
+        </div>
+      </a>
+
+      <a href="#" class="sito-card">
+        <div class="sito-numero">02</div>
+        <div class="sito-info">
+          <span class="sito-tag">Emotions · CBT</span>
+          <h3>Emotions Website</h3>
+          <p>Sito multi-pagina con Tic-Tac-Toe, Sentence Dice, Emotion Wheel, comparatives e journal delle emozioni.</p>
+          <span class="sito-url">↗ vai al sito</span>
+        </div>
+      </a>
+
+      <a href="#" class="sito-card">
+        <div class="sito-numero">03</div>
+        <div class="sito-info">
+          <span class="sito-tag">Classroom Tool</span>
+          <h3>Goose Game Platform</h3>
+          <p>Gioco dell'oca interattivo multimateria con categorie personalizzabili, colori tematici e domande a risposta multipla.</p>
+          <span class="sito-url">↗ vai al sito</span>
+        </div>
+      </a>
+
+      <a href="#" class="sito-card">
+        <div class="sito-numero">04</div>
+        <div class="sito-info">
+          <span class="sito-tag">Quiz · Musica</span>
+          <h3>LyricSwap Quiz</h3>
+          <p>Web app quiz musicale con 17 canzoni, timer, punteggio e interfaccia dinamica. Perfetto per warm-up e revisione.</p>
+          <span class="sito-url">↗ vai al sito</span>
+        </div>
+      </a>
+
+      <a href="#" class="sito-card">
+        <div class="sito-numero">05</div>
+        <div class="sito-info">
+          <span class="sito-tag">Gestione Classe</span>
+          <h3>Classroom Manager</h3>
+          <p>App Firebase per mappe dei posti, formazione gruppi, flag DSA/104 e registro voti integrato (RegistroTeacher).</p>
+          <span class="sito-url">↗ vai al sito</span>
+        </div>
+      </a>
+
+      <a href="#" class="sito-card">
+        <div class="sito-numero">06</div>
+        <div class="sito-info">
+          <span class="sito-tag">Economy · NFC</span>
+          <h3>SchoolBank</h3>
+          <p>Sistema di economia virtuale per la classe con NFC, Firebase Realtime Database e interfaccia web completa.</p>
+          <span class="sito-url">↗ vai al sito</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ── CTA finale ── -->
+  <section class="cta-finale">
+    <div>
+      <h2>Tutto fatto <span>a mano</span>,<br>anche il digitale.</h2>
+      <div class="cta-stats">
+        <div class="stat-item">
+          <span class="stat-num">6+</span>
+          <span class="stat-label">Siti Didattici</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">20+</span>
+          <span class="stat-label">Template</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Livelli CEFR</span>
+        </div>
+      </div>
+    </div>
+    <div class="cta-destra">
+      <a href="#" class="cta-finale-link btn-shop">VAI ALLO SHOP →</a>
+      <a href="index.html#sezione-contatti" class="cta-finale-link btn-contatti">RICHIEDI UNA RISORSA PERSONALIZZATA</a>
+    </div>
+  </section>
+
+  <div class="footer-band"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

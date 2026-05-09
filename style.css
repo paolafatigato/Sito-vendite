@@ -1,0 +1,841 @@
+/* Rimuove la sottolineatura blu dai link delle floating cards */
+.mini-card, .mini-card * {
+  text-decoration: none !important;
+}
+/* Rimuove la linea blu sui link delle floating cards */
+.mini-card:focus, .mini-card:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+/* Impostazioni base */
+
+/* ===== FONT JAPANDI ===== */
+/* ===== per stampatello pulito ===== */
+@font-face {
+  font-family: 'Japandi';
+  src: url('fonts/Japandi Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Japandi';
+  src: url('fonts/Japandi Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Japandi';
+  src: url('fonts/Japandi-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* ===== FONT MAGOA ===== */
+/* ===== per a strana e o con stellina ===== */
+@font-face {
+  font-family: 'Magoa';
+  src: url('fonts/Magoa.otf') format('opentype'),
+       url('fonts/Magoa.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ===== FONT MAGLITE ===== */
+/* ===== lettere con virgola ===== */
+@font-face {
+  font-family: 'Maglite';
+  src: url('fonts/Maglite.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* ===== FONT BEACH COTTAGE ===== */
+/* ===== cicciotto stampatello ===== */
+@font-face {
+  font-family: 'Beach Cottage';
+  src: url('fonts/Beach Cottage.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+.special-text {
+  font-feature-settings: "aalt"; /* Stylistic Alternates */
+}
+
+
+
+/* ===== HOME ===== */
+/* =============== */
+body {
+  margin: 0;
+  font-family: 'Magoa';
+  background-color: #fff6f1;
+  text-align: center;
+}
+
+/* Navbar in alto */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 60px;
+  color:#2a2222 ;
+  font-family: 'Japandi';
+  letter-spacing: 1.2px;
+}
+.logo {
+  font-size: 1.5em;
+  color: #2a2222;
+  font-family: 'Maglite';
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+nav a {
+  text-decoration: none;
+  color: #2a2222;
+  font-size: 0.9em;
+}
+.navbar nav a:hover {
+  color: #caff1d; /* */
+}
+
+
+/* Titolo e sottotitolo centrati */
+.titolo-paola {
+  font-size: 11em;
+  color: #e72f72;
+  margin: 0;
+  margin-top: -33px;
+  font-weight: 900;
+  font-family: 'Maglite';
+}
+.special-font{
+    font-family: 'Magoa';
+    letter-spacing: 8px;
+}
+
+.sottotitolo {
+  font-size: 5em;
+  color: #f9c5ba;
+  margin-top: -28px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  font-family: 'Japandi', sans-serif;
+  font-weight: 300; /* Japandi-Light */
+
+}
+
+/* Fascia sottile fucsia */
+.fascia-sottile {
+  background-color: #f090fb;
+  color: #caff1d;  
+  font-family: 'Japandi', sans-serif;
+  font-size: 0.8em;
+  padding: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* === TESTO SCORRENTE IN FASCIA SOTTILE === */
+.fascia-sottile {
+  overflow: hidden; /* nasconde il testo in eccesso */
+  position: relative;
+  white-space: nowrap; /* testo tutto su una riga */
+}
+.testo-scorrente {
+  display: inline-block;
+  animation: scorrimento 45s linear infinite; /* animazione lenta e continua */
+  padding-left: 0; /* parte da fuori schermo a destra */
+}
+@keyframes scorrimento {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+
+/* Contenitore che include cerchi e bottone verticale */
+.contenitore-sezione-prodotti {
+  display: flex;
+  justify-content: space-between; /* separa prodotti e bottone */
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0px;
+  gap: 20px;
+}
+
+.sezione-prodotti {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* distribuisce i cerchi */
+  flex: 1; /* occuperà tutto lo spazio disponibile */
+  gap: 20px;
+}
+/* Bottone verticale nello stesso flusso */
+.shop-now-layout {
+  writing-mode: vertical-rl; /* testo verticale */
+  transform: rotate(180deg); /* per leggerlo dal basso verso l'alto */
+  background-color: #f9c5ba;
+  color: #8b25c9;
+  font-family: 'Beach Cottage';
+  font-weight: bold;
+  font-size: 2.6em;
+  letter-spacing: 2px;
+  padding: 22px 26px;
+  border-radius: 0px;
+  margin-left: 20px;
+  align-content: stretch;
+  align-self: stretch;
+}
+
+.shop-now-layout:hover {
+  font-size: 3.1em; /* leggero ingrandimento del testo */
+}
+
+
+.prodotto {  
+  font-family: 'Japandi', sans-serif;
+  color: white;
+  text-transform: uppercase; /*maiuscole*/
+  text-decoration: none;
+  position: relative;
+  flex: 1 1 clamp(60px, 25vw, 199px); /* da 88px a 199px */
+  max-width: 299px;
+  min-width: 60px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 40px 10px;
+}
+
+.prodotto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.prodotto:hover img {
+  transform: scale(1.15);
+}
+
+/* Etichetta al centro dei cerchi */
+.etichetta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 1.8em;
+  letter-spacing: 1px;
+  text-shadow: none;
+}
+#novit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%; /* ora è fluido: segue la dimensione di .prodotto */
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background-color: var(--stellina-colore, #e72f72);
+
+  -webkit-mask-image: url('immagini/stellina.png');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+
+  mask-image: url('immagini/stellina.png');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-mode: alpha;
+
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Effetto hover solo sulla stellina */
+#novit:hover::before {
+  transform: translate(-50%, -50%) scale(1.1) rotate(6deg);
+}
+
+
+.footer-color-block{
+  height: 60px;
+  background: #ff7837;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+#navbar2{
+    background-color: #ff7837;
+    color: #ffece0;
+  margin: 0;
+  border: none;
+  outline: none;
+}
+
+#navbar2 nav a {
+  color: #ffece0;
+}
+
+
+/* === SEZIONE ABOUT ME === */
+.about-me {
+  background-color: #ff7837;
+}
+
+.about-me-in {
+      position: relative; /* per gestire il ::before */
+  outline: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff7837;
+  color: #2a2222;
+  font-family: 'Magoa', sans-serif;
+  gap: 40px;
+}
+
+/* Immagine sagomata a fiore */
+.about-me-img {
+  width: 620px;
+  height: 620px;
+  /* Allinea in basso rispetto all’elemento flessibile */
+  align-self: flex-start;
+  /* Aggiunge spazio sopra per abbassarla */
+  margin-top: 90px;
+  background-image: url('immagini/aboutme1.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+/* Testo a lato */
+.about-me-text {
+  max-width: 500px;
+  font-size: 1.3em;
+  line-height: 1.4;
+  text-align: justify;
+  background-color: #ff7837;
+  z-index: 1;
+  padding: 0 50px;
+
+}
+/* Rettangolo chiaro dietro il testo */
+.rettangolo-sotto {
+  position: absolute;
+top: 190px;
+  left: 0;
+  height: 400px;
+  width: 100%; /* 620px larghezza immagine + 40px gap */
+  background-color: #ffece0;
+  z-index: 0;
+}
+
+
+/* Titolo in giallo lime */
+.about-me-title {
+  font-family: 'Japandi';
+  color: #caff1d;
+  font-size: 4.5em;
+  margin-bottom: 0px;
+  margin-top: -20px;
+  line-height: 0.9em;/*per abbassare il titolo più vicino al testo*/
+
+}
+
+/*contatti*/
+
+/* === SEZIONE CONTATTI PRECISA === */
+.sezione-contatti {
+  position: relative;
+  background-color: #ffece0;
+  overflow: hidden;
+}
+
+/* NAVBAR IN ALTO */
+.navbar-contatti {
+  background-color: transparent;
+  padding: 30px 60px;
+}
+.navbar-contatti nav a{
+    color: #8b25c9;
+}
+
+/* CONTENITORE GENERALE A DUE COLONNE + immagine */
+.contenitore-contatti {
+  display: flex;
+  flex-direction: row;
+  height: 650px;
+  position: relative;
+  z-index: 1;
+}
+
+/* === COLONNA SINISTRA - info contatti === */
+.colonna-sinistra {
+  background-color: #ffece0;
+  color: #2a2222;
+  flex: 1.9;
+  padding: 90px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  max-width: 60%;
+}
+
+.colonna-sinistra h2 {
+  font-size: 2.8em;
+  font-family: 'Maglite';
+  color: #2a2222;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.colonna-sinistra p {
+  font-size: 1em;
+  max-width: 50%;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.info-contatti {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+  font-size: 1.1em;
+}
+.info-contatti li {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+/* Icone social */
+.icone-social img {
+  width: 24px;/*non hanno senso, dopo vediamo*/
+  
+}
+
+/* === IMMAGINE A DESTRA === */
+.immagine-contatti {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 33.33vw;
+  background-image: url("immagini/contact.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+/* === FORM BIANCO SOVRAPPOSTO ALL’IMMAGINE === */
+.form-contatto-box {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  transform: translateY(-50%);
+  background-color: #f090fb;
+  width: 480px;
+  padding: 40px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  z-index: 3;
+  font-family: 'Japandi';
+}
+
+.form-contatto-box h3 {
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  color: #fff6f1;
+}
+
+.form-contatto-box .riga {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-contatto-box input,
+.form-contatto-box textarea {
+  width: 100%;
+  padding: 12px 10px;
+  border: 1px solid white;
+  border-radius: 0px; /* squadrato */
+  font-size: 1em;
+  background-color: white;
+  color: #2a2222;
+}
+
+.form-contatto-box textarea {
+  resize: vertical;
+  height: 120px;
+}
+
+.form-contatto-box button {
+  background-color: #ff7837;
+  color: #fff6f1;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 0;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Japandi';
+}
+
+.form-contatto-box button:hover {
+  background-color: #caff1d;
+  color: #2a2222;
+}
+
+
+
+
+
+/**/
+.titolo-section{
+  font-size: 6em;
+  color: #f090fb;
+  margin: 18px;
+  margin-top: -33px;
+  font-weight: 900;
+  font-family: 'Maglite';
+}
+.sottotitolo-section{
+    color: #ff7837;
+  font-size: 1.6em;
+    margin-bottom: 2px;
+  letter-spacing: 1.1px;
+}
+
+.fusion-gallery {
+  display: flex;
+  height: 400px;
+  gap: 1rem;
+  padding: 60px;
+}
+.fusion-gallery .add-to-cart {
+  position: absolute;
+  top: 180px; /* sopra il contenuto bianco */
+  left: 50%;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.85); /* sfondo trasparente chiaro */
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #8b25c9;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  font-family: 'Japandi';
+}
+
+.fusion-gallery .card-fusion:hover .add-to-cart {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+
+.fusion-gallery .card-fusion {
+  flex: 1;
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+  transition: flex 0.85s cubic-bezier(0.25, 0.4, 0.45, 1.4), transform 0.5s ease, background-size 0.5s ease;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto 100%; /*così devi per forza mettere immagini landscape, perchè si ingrandiscono al massimo alla loro grandezza 100%*/
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.fusion-gallery .card-fusion:hover {
+  flex: 5;
+  transform: scale(1.02);
+  background-size: cover;
+}
+
+.fusion-gallery .card-content {
+  background: white;
+  padding: 16px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  transform: translateY(100%);
+  opacity: 0;
+  color: #2a2222;
+}
+
+.card-content h2 {
+    color: #ff7837;
+    font-family: 'magoa';
+}
+
+.fusion-gallery .card-fusion:hover .card-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.fusion-gallery .icons {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -20px);
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.fusion-gallery .icons i {
+  color: white;
+  background: #e72f72;
+  padding: 8px;
+  border-radius: 50%;
+  font-size: 0.9em;
+}
+
+.fusion-gallery .card-fusion:hover .icons {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+
+.dettaglio-prodotto {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  padding: 60px 20px;
+  background-color: #fff6f1;
+}
+
+/* FOTO GRANDE E FRECCE */
+.foto-prodotto-acquisto {
+  position: relative;
+  width: 340px;
+  height: 450px;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.foto-prodotto-acquisto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.freccia {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255,246,241,0.9);
+  border: none;
+  font-size: 2.5em;
+  color: #e72f72;
+  padding: 0 12px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.freccia.sinistra {
+  left: 0;
+}
+
+.freccia.destra {
+  right: 0;
+}
+
+/* DATI PRODOTTO */
+.dati-prodotto-acquisto {
+  max-width: 500px;
+  text-align: left;
+  font-family: 'Japandi';
+}
+
+.dati-prodotto-acquisto h2 {
+  font-size: 2em;
+  color: #8b25c9;
+  margin-bottom: 10px;
+}
+
+.descrizione {
+  font-size: 1.1em;
+  color: #2a2222;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.prezzo-dettaglio {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #e72f72;
+  margin-bottom: 30px;
+}
+
+.bottone-carrello {
+  background-color: #f9c5ba;
+  color: #8b25c9;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.bottone-carrello:hover {
+  transform: scale(1.05);
+}
+
+/*SIGILLI*/
+body.sfondo-carta {
+  background-color: #fff6f1;
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  background-repeat: repeat;
+  background-size: auto;
+}
+
+
+#titolo-sigilli{
+    color: #ff7837;
+}
+#sottotitolo-sigilli{
+    color: #2a2222;
+}
+/* Contenitore galleria dei sigilli */
+.sigilli-gallery {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 60px 20px;
+}
+
+/* Singola card del sigillo */
+.sigillo-card {
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+/* Immagine del sigillo */
+.sigillo-img {
+  width: 180px;
+  aspect-ratio: 1 / 1;
+  transition: transform 0.3s ease;
+  z-index: 1;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+/* Evita che il rettangolo sotto si deformi */
+.sigillo-info {
+  margin-top: 20px;
+  background-color: #fff6f1;
+  padding: 10px;
+  transition: background 0.3s ease;
+  min-height: 80px; /* blocca altezza */
+  font-family: 'Japandi';
+}
+
+/* Ingrandisci sigillo selezionato, rimpicciolisci gli altri */
+.sigilli-gallery:hover .sigillo-card {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+.sigilli-gallery:hover .sigillo-card:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  z-index: 2;
+}
+
+
+/*slides*/
+
+.layout-ppt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 93px;
+  padding: 0px;
+  max-width: 100vw;
+  min-height: 90vh;
+}
+
+.layout-ppt .blocco-immagini,
+.layout-ppt .blocco-nero {
+  aspect-ratio: 16 / 9;
+  max-width: 25vw;
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.layout-ppt .blocco-nero {
+  background-color: #2a2222;
+}
+
+#slideshow-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.layout-ppt .galleria img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.bottone-contattami {
+   height: 100%;
+   width: 100%;
+  font-family: 'Japandi', sans-serif;
+  text-transform: uppercase;
+  font-size: 1.4em;
+  background-color: #2a2222;
+  color: #fff6f1;
+  border: none;
+  cursor: pointer;
+   display: flex;              /* necessario per il centramento */
+  align-items: center;        /* centra verticalmente */
+  justify-content: center;    /* centra orizzontalmente */
+  text-decoration: none;      /* niente sottolineatura */
+}
+
+.bottone-contattami:hover {
+  background-color: #caff1d;  /* verde limone */
+  color: #2a2222;
+}
