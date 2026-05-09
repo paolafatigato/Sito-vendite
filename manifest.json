@@ -1,0 +1,20 @@
+{
+  "name": "Paola al Vento",
+  "short_name": "Paola",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff6f1",
+  "theme_color": "#ff7837",
+  "icons": [
+    {
+      "src": "P-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "P-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
