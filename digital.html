@@ -338,6 +338,19 @@
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
+    .siti-gruppo-label {
+      grid-column: 1 / -1;
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: #888;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: .5rem;
+      margin-top: 1.5rem;
+    }
+    .siti-gruppo-label:first-child { margin-top: 0; }
+
     .sito-card {
       border: 2px solid var(--nero);
       padding: 2rem;
@@ -346,8 +359,8 @@
       align-items: flex-start;
       background: #fff;
       transition: background .2s, transform .2s;
-      text-decoration: none;
       color: var(--nero);
+      position: relative;
     }
     .sito-card:hover {
       background: var(--nero);
@@ -356,6 +369,41 @@
     }
     .sito-card:hover .sito-url { color: var(--lime); }
     .sito-card:hover .sito-tag { background: var(--rosa); color: #fff; }
+    .sito-card:hover .btn-info { border-color: #555; color: var(--crema); }
+    .sito-card-link {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      text-decoration: none;
+      color: inherit;
+      flex: 1;
+    }
+    .btn-info {
+      position: absolute;
+      top: .8rem;
+      right: .8rem;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid #ccc;
+      background: transparent;
+      color: #999;
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, color .2s, border-color .2s;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+    .btn-info:hover {
+      background: var(--rosa);
+      border-color: var(--rosa);
+      color: #fff;
+    }
     .sito-numero {
       font-family: 'Playfair Display', serif;
       font-size: 3rem;
@@ -392,6 +440,99 @@
       margin-top: .7rem;
       letter-spacing: .1em;
     }
+
+    /* ── Modal info ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(17,17,17,.75);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .modal-overlay.aperta { display: flex; }
+    .modal-box {
+      background: var(--crema);
+      max-width: 520px;
+      width: 100%;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 10px 10px 0 var(--rosa);
+      animation: modal-in .18s ease-out;
+    }
+    @keyframes modal-in {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none; border: none;
+      font-family: 'Space Mono', monospace;
+      font-size: .85rem;
+      cursor: pointer;
+      color: #888;
+      transition: color .2s;
+    }
+    .modal-close:hover { color: var(--rosa); }
+    .modal-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .2em;
+      background: var(--lime);
+      color: var(--nero);
+      padding: .2rem .6rem;
+      display: inline-block;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .modal-body {
+      font-size: .98rem;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 1.5rem;
+    }
+    .modal-body ul {
+      margin: .6rem 0 .6rem 1.2rem;
+    }
+    .modal-body li { margin-bottom: .3rem; }
+    .modal-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+    .modal-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .1em;
+      border: 1px solid #ccc;
+      padding: .2rem .65rem;
+      color: #555;
+    }
+    .modal-btn {
+      display: inline-block;
+      background: var(--nero);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .14em;
+      padding: .75rem 1.6rem;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background .2s;
+    }
+    .modal-btn:hover { background: var(--rosa); }
 
     /* ── Sezione adesivi ── */
     .adesivi-showcase {
@@ -806,65 +947,345 @@
 
     <div class="siti-lista">
 
-      <a href="#" class="sito-card">
-        <div class="sito-numero">01</div>
-        <div class="sito-info">
-          <span class="sito-tag">CLIL · Storia</span>
-          <h3>Witch Hunt</h3>
-          <p>Sito interattivo a tre file (HTML/CSS/JS) con hash-based routing per l'unità sulla Caccia alle Streghe. Prima media, A2.</p>
-          <span class="sito-url">↗ vai al sito</span>
-        </div>
-      </a>
+      <!-- ── GIOCHI DI GRAMMATICA & VOCABOLARIO ── -->
+      <div class="siti-gruppo-label">🎮 Giochi di grammatica &amp; vocabolario</div>
 
-      <a href="#" class="sito-card">
-        <div class="sito-numero">02</div>
-        <div class="sito-info">
-          <span class="sito-tag">Emotions · CBT</span>
-          <h3>Emotions Website</h3>
-          <p>Sito multi-pagina con Tic-Tac-Toe, Sentence Dice, Emotion Wheel, comparatives e journal delle emozioni.</p>
-          <span class="sito-url">↗ vai al sito</span>
-        </div>
-      </a>
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('never')" aria-label="Info Never Have I Ever">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Never-ever/" target="_blank" rel="noopener">
+          <div class="sito-numero">01</div>
+          <div class="sito-info">
+            <span class="sito-tag">Speaking · A2–B1</span>
+            <h3>Never Have I Ever</h3>
+            <p>Gioco parlato sul Present Perfect: un giocatore legge la frase, gli altri reagiscono. Perfetto come warm-up o per rompere il ghiaccio.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Never-ever</span>
+          </div>
+        </a>
+      </div>
 
-      <a href="#" class="sito-card">
-        <div class="sito-numero">03</div>
-        <div class="sito-info">
-          <span class="sito-tag">Classroom Tool</span>
-          <h3>Goose Game Platform</h3>
-          <p>Gioco dell'oca interattivo multimateria con categorie personalizzabili, colori tematici e domande a risposta multipla.</p>
-          <span class="sito-url">↗ vai al sito</span>
-        </div>
-      </a>
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('bomb')" aria-label="Info Bomb Game">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Bomb-game/" target="_blank" rel="noopener">
+          <div class="sito-numero">02</div>
+          <div class="sito-info">
+            <span class="sito-tag">Vocabulary · A1–B1</span>
+            <h3>💣 Bomb Game</h3>
+            <p>La bomba passa di mano in mano mentre si risponde a domande di vocabolario. Chi tiene la bomba quando esplode è eliminato!</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Bomb-game</span>
+          </div>
+        </a>
+      </div>
 
-      <a href="#" class="sito-card">
-        <div class="sito-numero">04</div>
-        <div class="sito-info">
-          <span class="sito-tag">Quiz · Musica</span>
-          <h3>LyricSwap Quiz</h3>
-          <p>Web app quiz musicale con 17 canzoni, timer, punteggio e interfaccia dinamica. Perfetto per warm-up e revisione.</p>
-          <span class="sito-url">↗ vai al sito</span>
-        </div>
-      </a>
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('tombola')" aria-label="Info Tombola">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/codeTombolaWords/" target="_blank" rel="noopener">
+          <div class="sito-numero">03</div>
+          <div class="sito-info">
+            <span class="sito-tag">Review · A1–A2</span>
+            <h3>🎱 Word Tombola</h3>
+            <p>Bingo di vocabolario personalizzabile per ripassare qualsiasi set di parole. Ideale a fine unità didattica.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/codeTombolaWords</span>
+          </div>
+        </a>
+      </div>
 
-      <a href="#" class="sito-card">
-        <div class="sito-numero">05</div>
-        <div class="sito-info">
-          <span class="sito-tag">Gestione Classe</span>
-          <h3>Classroom Manager</h3>
-          <p>App Firebase per mappe dei posti, formazione gruppi, flag DSA/104 e registro voti integrato (RegistroTeacher).</p>
-          <span class="sito-url">↗ vai al sito</span>
-        </div>
-      </a>
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('hangman')" aria-label="Info Personality Hangman">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Personality-vocabulary-game/" target="_blank" rel="noopener">
+          <div class="sito-numero">04</div>
+          <div class="sito-info">
+            <span class="sito-tag">Vocabulary · A2</span>
+            <h3>😊 Personality Hangman</h3>
+            <p>Versione dell'impiccato focalizzata sugli aggettivi di personalità. Ottimo per fissare il lessico descrittivo.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Personality-vocabulary-game</span>
+          </div>
+        </a>
+      </div>
 
-      <a href="#" class="sito-card">
-        <div class="sito-numero">06</div>
-        <div class="sito-info">
-          <span class="sito-tag">Economy · NFC</span>
-          <h3>SchoolBank</h3>
-          <p>Sistema di economia virtuale per la classe con NFC, Firebase Realtime Database e interfaccia web completa.</p>
-          <span class="sito-url">↗ vai al sito</span>
-        </div>
-      </a>
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('alphabetwheel')" aria-label="Info Alphabet Wheel">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/AlphabetWheel/" target="_blank" rel="noopener">
+          <div class="sito-numero">05</div>
+          <div class="sito-info">
+            <span class="sito-tag">Vocabulary · A1</span>
+            <h3>🎡 Alphabet Wheel</h3>
+            <p>Ruota gira-e-trova: gli studenti devono trovare una parola della categoria estratta per ogni lettera. Firebase cloud, personalizzabile per classe.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/AlphabetWheel</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('mimeorlie')" aria-label="Info Mime or Lie">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/MimeOrLie/" target="_blank" rel="noopener">
+          <div class="sito-numero">06</div>
+          <div class="sito-info">
+            <span class="sito-tag">Speaking · A2</span>
+            <h3>🤫 Mime or Lie</h3>
+            <p>Gli studenti mimano o mentono su parole di vocabolario: la classe deve indovinare se stanno mimando o bluffando. Warm-up irresistibile.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/MimeOrLie</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('fakeactors')" aria-label="Info Fake Actors">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Fake-actors/" target="_blank" rel="noopener">
+          <div class="sito-numero">07</div>
+          <div class="sito-info">
+            <span class="sito-tag">Drama · B1</span>
+            <h3>🎭 Fake Actors</h3>
+            <p>Gioco di recitazione e bluff in inglese. Gli studenti agiscono scene assegnate e la classe deve smascherare chi non sta recitando davvero.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Fake-actors</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('mathmarket')" aria-label="Info Math Market">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Math-Market/" target="_blank" rel="noopener">
+          <div class="sito-numero">08</div>
+          <div class="sito-info">
+            <span class="sito-tag">CLIL · Matematica</span>
+            <h3>🧮 Math Market</h3>
+            <p>Attività CLIL che unisce matematica e inglese: numeri, operazioni e vocabolario del mercato in lingua. Perfetto per interdisciplinarità.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Math-Market</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ── GRAMMATICA INTERATTIVA ── -->
+      <div class="siti-gruppo-label">📚 Grammatica interattiva</div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('paradigms')" aria-label="Info Paradigms">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Paradigms/" target="_blank" rel="noopener">
+          <div class="sito-numero">09</div>
+          <div class="sito-info">
+            <span class="sito-tag">Grammar · A2–B1</span>
+            <h3>📚 Paradigms</h3>
+            <p>6 modalità di gioco per i verbi irregolari inglesi: flashcard LIM, Slide Challenge, Memory Match, indizi e sinonimi. Con foto personalizzate.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Paradigms</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('basket')" aria-label="Info Paradigms Basket">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/paradigmsBasket/" target="_blank" rel="noopener">
+          <div class="sito-numero">10</div>
+          <div class="sito-info">
+            <span class="sito-tag">Grammar · A2</span>
+            <h3>🫛 Paradigms Basket 🏀</h3>
+            <p>Verbi irregolari in stile basket: rispondi correttamente e segna punti. La competizione rende il ripasso dei paradigmi molto più coinvolgente.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/paradigmsBasket</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('pronouns')" aria-label="Info Pronouns and Relative">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Pronouns/" target="_blank" rel="noopener">
+          <div class="sito-numero">11</div>
+          <div class="sito-info">
+            <span class="sito-tag">Grammar · A2</span>
+            <h3>🔗 Pronouns &amp; Relative Clauses</h3>
+            <p>Gioco interattivo su pronomi e proposizioni relative (who, which, that). Costruito come ponte tra i pronomi e la sintassi complessa.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Pronouns</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('grammarbase')" aria-label="Info Pronouns and Present Simple">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Grammar-base/" target="_blank" rel="noopener">
+          <div class="sito-numero">12</div>
+          <div class="sito-info">
+            <span class="sito-tag">Grammar · A1</span>
+            <h3>📝 Pronouns &amp; Present Simple</h3>
+            <p>Base grammaticale per principianti assoluti: pronomi soggetto e presente semplice in un'unica interfaccia interattiva per la LIM.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Grammar-base</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ── CLIL STORIA & LETTERATURA ── -->
+      <div class="siti-gruppo-label">🏛️ CLIL storia &amp; letteratura</div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('revolutions')" aria-label="Info Revolutions">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/revolutions/" target="_blank" rel="noopener">
+          <div class="sito-numero">13</div>
+          <div class="sito-info">
+            <span class="sito-tag">CLIL · Storia · B1</span>
+            <h3>⛓️ Revolutions</h3>
+            <p>Unità CLIL che collega Rivoluzione Americana, Rivoluzione Francese e diritti civili. Giochi interattivi, vocabolario storico, Role Play.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/revolutions</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('haiti')" aria-label="Info Survival Haiti">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Survival-Haiti/" target="_blank" rel="noopener">
+          <div class="sito-numero">14</div>
+          <div class="sito-info">
+            <span class="sito-tag">CLIL · RPG · B1</span>
+            <h3>🌴 Survival Haiti</h3>
+            <p>RPG ambientato durante la Rivoluzione Haitiana a Saint-Domingue. Escape-room storico in inglese: decisioni, conseguenze, libertà.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Survival-Haiti</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('romeo')" aria-label="Info Romeo e Juliet">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/RomeoGame/" target="_blank" rel="noopener">
+          <div class="sito-numero">15</div>
+          <div class="sito-info">
+            <span class="sito-tag">Letteratura · B1</span>
+            <h3>🌹 Romeo &amp; Juliet Game Hub</h3>
+            <p>8 mini-giochi su Romeo e Giulietta di Shakespeare. Pensato per seconda media: vocabolario, trama, personaggi e citazioni in inglese.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/RomeoGame</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('pagesoffate')" aria-label="Info Pages of Fate">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/PagesofFate-Arena/" target="_blank" rel="noopener">
+          <div class="sito-numero">16</div>
+          <div class="sito-info">
+            <span class="sito-tag">Card Game · B1</span>
+            <h3>🃏 Pages of Fate Arena</h3>
+            <p>Battle card game multiplayer per la classe: gli studenti si sfidano usando carte di grammatica e vocabolario in tempo reale.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/PagesofFate-Arena</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ── WELLBEING & PSICOLOGIA ── -->
+      <div class="siti-gruppo-label">💚 Wellbeing &amp; psicologia</div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('emotions')" aria-label="Info Emotions">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/emotions/" target="_blank" rel="noopener">
+          <div class="sito-numero">17</div>
+          <div class="sito-info">
+            <span class="sito-tag">CBT · Emozioni · A2</span>
+            <h3>💚 Emotions</h3>
+            <p>Sito multi-attività su emozioni e benessere: Emotion Wheel, Sentence Dice, Tic-Tac-Toe, comparativi e journal. CLIL psicologia + inglese.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/emotions</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('toxic')" aria-label="Info Toxic Love">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Unhealty-Love-/" target="_blank" rel="noopener">
+          <div class="sito-numero">18</div>
+          <div class="sito-info">
+            <span class="sito-tag">PSE · Relazioni · B1</span>
+            <h3>💘 Toxic Love</h3>
+            <p>Lezione interattiva su relazioni sane e tossiche, red flag, manipolazione e strategie di risposta. Basato sul lavoro di Lundy Bancroft.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Unhealty-Love-</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('scienceteaching')" aria-label="Info Science of Teaching">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/-science-of-teaching/" target="_blank" rel="noopener">
+          <div class="sito-numero">19</div>
+          <div class="sito-info">
+            <span class="sito-tag">Neuroscienza · CLIL</span>
+            <h3>🧠 The Science of Teaching</h3>
+            <p>Come funziona la memoria? Spaced repetition, Memory Palace, effetto DRM: lezione CLIL interattiva sulla neuroscienza dell'apprendimento.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/-science-of-teaching</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ── GESTIONE CLASSE ── -->
+      <div class="siti-gruppo-label">🏫 Strumenti per la classe</div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('goose')" aria-label="Info Goose Game">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/GooseGame/" target="_blank" rel="noopener">
+          <div class="sito-numero">20</div>
+          <div class="sito-info">
+            <span class="sito-tag">Board Game · A1–B1</span>
+            <h3>🪿 Goose Game Platform</h3>
+            <p>Gioco dell'oca digitale per LIM con categorie personalizzabili (storia, Leopardi, fiumi, Witch Hunt…). Sistema a tema, domande a scelta multipla.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/GooseGame</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('sarabanda')" aria-label="Info Sarabanda">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Sarabanda/" target="_blank" rel="noopener">
+          <div class="sito-numero">21</div>
+          <div class="sito-info">
+            <span class="sito-tag">Music Quiz · Listening</span>
+            <h3>🎵 Sarabanda Edition</h3>
+            <p>Quiz musicale con 17 canzoni italiane e inglesi: fase libera e scelta multipla con timer. Link Spotify e YouTube integrati. Perfetto per warm-up.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Sarabanda</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('classmanager')" aria-label="Info Class Manager">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Class-Manager/" target="_blank" rel="noopener">
+          <div class="sito-numero">22</div>
+          <div class="sito-info">
+            <span class="sito-tag">Gestione Classe · Firebase</span>
+            <h3>🪑 Class Manager</h3>
+            <p>Mappa dei posti drag&amp;drop, formazione gruppi random/omogenei/eterogenei, flag DSA/104, registro voti gerarchico e tag categorie per verifica.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Class-Manager</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('medieval')" aria-label="Info Medieval Cards">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/Medieval-cards/#" target="_blank" rel="noopener">
+          <div class="sito-numero">23</div>
+          <div class="sito-info">
+            <span class="sito-tag">CLIL · Medioevo · A2</span>
+            <h3>🧙 Medieval Cards</h3>
+            <p>Carte per l'unità Witch Hunt: quattro classi sociali medievali, carte personaggio, gioco in stile Lupus. Prima media, A2.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/Medieval-cards</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('wallstreet')" aria-label="Info Wall Street 1929">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/WallStreet29/" target="_blank" rel="noopener">
+          <div class="sito-numero">24</div>
+          <div class="sito-info">
+            <span class="sito-tag">CLIL · Economia · B1</span>
+            <h3>💸 Wall Street 1929</h3>
+            <p>Simulazione del crollo di Wall Street del 1929. Gli studenti vivono la Grande Depressione attraverso scelte economiche e conseguenze storiche.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/WallStreet29</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sito-card" tabindex="0">
+        <button class="btn-info" onclick="apriModal('food')" aria-label="Info Countable Food">?</button>
+        <a class="sito-card-link" href="https://paolafatigato.github.io/countable-food/" target="_blank" rel="noopener">
+          <div class="sito-numero">25</div>
+          <div class="sito-info">
+            <span class="sito-tag">Grammar · Food · A2</span>
+            <h3>🍎 Countable Food</h3>
+            <p>Gioco interattivo su countable e uncountable nouns con vocabolario alimentare. Ideale come supporto visivo su LIM per l'unità Food.</p>
+            <span class="sito-url">↗ paolafatigato.github.io/countable-food</span>
+          </div>
+        </a>
+      </div>
 
     </div>
   </section>
@@ -876,7 +1297,7 @@
       <h2>Tutto fatto <span>a mano</span>,<br>anche il digitale.</h2>
       <div class="cta-stats">
         <div class="stat-item">
-          <span class="stat-num">6+</span>
+          <span class="stat-num">25+</span>
           <span class="stat-label">Siti Didattici</span>
         </div>
         <div class="stat-item">
@@ -897,6 +1318,223 @@
 
   <div class="footer-band"></div>
 
+  <!-- ── Modal info siti ── -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" id="modalClose" aria-label="Chiudi">✕ CHIUDI</button>
+      <span class="modal-tag" id="modalTag"></span>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-body" id="modalBody"></div>
+      <a href="#" class="modal-btn" id="modalLink" target="_blank" rel="noopener">↗ APRI IL SITO</a>
+    </div>
+  </div>
+
   <script src="script.js"></script>
+  <script>
+    const infoSiti = {
+      never: {
+        tag: 'Speaking · Present Perfect',
+        titolo: '🙅 Never Have I Ever',
+        link: 'https://paolafatigato.github.io/Never-ever/',
+        meta: ['Livello A2–B1', 'Prima / Seconda media', 'Warm-up o focus activity'],
+        testo: `Gioco parlato pensato per praticare il <strong>Present Perfect</strong> in modo autentico e divertente. Un giocatore legge la frase "Never have I ever…" e tutti gli altri alzano la mano (o reagiscono digitalmente) se l'azione la riguarda. <br><br>Ottimo per:<ul><li>Rompere il ghiaccio a inizio anno</li><li>Focus grammaticale sul Present Perfect</li><li>Creare connessioni tra studenti</li></ul>`
+      },
+      bomb: {
+        tag: 'Vocabulary · Team game',
+        titolo: '💣 Bomb Game',
+        link: 'https://paolafatigato.github.io/Bomb-game/',
+        meta: ['Livello A1–B1', 'Tutti gli anni', 'Qualsiasi argomento'],
+        testo: `La bomba digitale passa di mano in mano mentre gli studenti rispondono a domande di <strong>vocabolario o grammatica</strong>. Chi tiene la bomba quando il timer scade è eliminato.<br><br>Funziona con qualsiasi set di domande e qualsiasi livello. Adrenalina garantita — e i ragazzi non si accorgono di star studiando.`
+      },
+      tombola: {
+        tag: 'Review · Bingo',
+        titolo: '🎱 Word Tombola',
+        link: 'https://paolafatigato.github.io/codeTombolaWords/',
+        meta: ['Livello A1–A2', 'Prima media', 'Fine unità didattica'],
+        testo: `Versione digitale della tombola italiana, riconvertita in <strong>bingo di vocabolario</strong>. Le parole vengono estratte casualmente e gli studenti le segnano sulla propria scheda.<br><br>Ideale come attività di revisione a fine unità: ogni classe può avere il proprio set personalizzato di parole.`
+      },
+      hangman: {
+        tag: 'Vocabulary · Personalità',
+        titolo: '😊 Personality Hangman',
+        link: 'https://paolafatigato.github.io/Personality-vocabulary-game/',
+        meta: ['Livello A2', 'Prima / Seconda media', 'Aggettivi di personalità'],
+        testo: `Il classico gioco dell'impiccato reinventato con focus sugli <strong>aggettivi di personalità</strong> inglesi. Gli studenti indovinano la parola lettera per lettera, con suggerimenti visivi e feedack immediato.<br><br>Perfetto per fissare il lessico descrittivo prima di attività di speaking o writing.`
+      },
+      alphabetwheel: {
+        tag: 'Vocabulary · Firebase',
+        titolo: '🎡 Alphabet Wheel',
+        link: 'https://paolafatigato.github.io/AlphabetWheel/',
+        meta: ['Livello A1', 'Prima media', 'Personalizzabile per classe'],
+        testo: `La ruota gira e seleziona una lettera: gli studenti devono trovare una parola della <strong>categoria estratta</strong> che inizi con quella lettera. Sincronizzato con Firebase — ogni classe ha i propri set di categorie salvati nel cloud.<br><br>Ottimo per: vocabolario tematico, warm-up, revisione rapida.`
+      },
+      mimeorlie: {
+        tag: 'Speaking · Bluff',
+        titolo: '🤫 Mime or Lie',
+        link: 'https://paolafatigato.github.io/MimeOrLie/',
+        meta: ['Livello A2', 'Tutti gli anni', 'Speaking + vocabolario'],
+        testo: `Lo studente estrae una parola di vocabolario e sceglie: <strong>mimarla oppure mentire</strong> (agire come se stesse mimando qualcos'altro). La classe vota se sta mimando davvero o bluffando.<br><br>Genera discussione autentica in inglese e momenti di ilarità genuina. Uno dei preferiti degli studenti.`
+      },
+      fakeactors: {
+        tag: 'Drama · Speaking',
+        titolo: '🎭 Fake Actors',
+        link: 'https://paolafatigato.github.io/Fake-actors/',
+        meta: ['Livello B1', 'Seconda / Terza media', 'Produzione orale'],
+        testo: `Gioco di <strong>recitazione e smascheramento</strong>: agli studenti vengono assegnate scene in inglese da recitare. Uno di loro però sta fingendo — la classe deve capire chi non sta recitando davvero osservando il linguaggio del corpo e le scelte linguistiche.<br><br>Sviluppa fluency, intonazione e consapevolezza pragmatica.`
+      },
+      mathmarket: {
+        tag: 'CLIL · Matematica',
+        titolo: '🧮 Math Market',
+        link: 'https://paolafatigato.github.io/Math-Market/',
+        meta: ['CLIL interdisciplinare', 'Prima media', 'Numeri + vocabolario'],
+        testo: `Attività <strong>CLIL che unisce matematica e inglese</strong>: numeri, operazioni aritmetiche e vocabolario del mercato (prezzi, quantità, monete) tutto in lingua inglese.<br><br>Progettata per la collaborazione con il docente di matematica nell'ambito di progetti interdisciplinari.`
+      },
+      paradigms: {
+        tag: 'Grammar · Verbi irregolari',
+        titolo: '📚 Paradigms',
+        link: 'https://paolafatigato.github.io/Paradigms/',
+        meta: ['Livello A2–B1', 'Prima / Seconda media', '6 modalità di gioco'],
+        testo: `Il sito più completo per i <strong>verbi irregolari inglesi</strong>: 6 diverse modalità di pratica in un unico posto.<ul><li>Flashcard per LIM</li><li>Slide Challenge a tempo</li><li>Italiano → Inglese</li><li>Indizi e sinonimi</li><li>Memory Match</li><li>Clue mode</li></ul>Supporta foto personalizzate nella cartella locale.`
+      },
+      basket: {
+        tag: 'Grammar · Gamification',
+        titolo: '🫛 Paradigms Basket 🏀',
+        link: 'https://paolafatigato.github.io/paradigmsBasket/',
+        meta: ['Livello A2', 'Prima / Seconda media', 'Past Simple + Participio'],
+        testo: `Ripasso dei <strong>verbi irregolari in stile basket</strong>: rispondi correttamente alla forma del paradigma richiesta e segna un canestro. Sbaglia e perdi la palla.<br><br>La metafora sportiva crea una competizione sana che rende il ripasso grammaticale molto più coinvolgente rispetto ai tradizionali esercizi scritti.`
+      },
+      pronouns: {
+        tag: 'Grammar · Relative Clauses',
+        titolo: '🔗 Pronouns & Relative Clauses',
+        link: 'https://paolafatigato.github.io/Pronouns/',
+        meta: ['Livello A2', 'Prima / Seconda media', 'Who, Which, That'],
+        testo: `Sito interattivo che guida gli studenti dalla conoscenza dei <strong>pronomi soggetto</strong> fino alle <strong>proposizioni relative</strong> (who, which, that) in modo graduale.<br><br>Costruito come "ponte" didattico: parte da strutture già note e introduce la sintassi complessa in modo non traumatico.`
+      },
+      grammarbase: {
+        tag: 'Grammar · Principianti',
+        titolo: '📝 Pronouns & Present Simple',
+        link: 'https://paolafatigato.github.io/Grammar-base/',
+        meta: ['Livello A1', 'Prima media (inizio anno)', 'LIM'],
+        testo: `Interfaccia interattiva per la <strong>grammatica di base</strong>: pronomi soggetto e presente semplice in un formato visivo pensato per la LIM.<br><br>Ideale per le prime settimane di prima media, quando si consolida la base grammaticale prima di procedere con strutture più complesse.`
+      },
+      revolutions: {
+        tag: 'CLIL · Storia · B1',
+        titolo: '⛓️ Revolutions',
+        link: 'https://paolafatigato.github.io/revolutions/',
+        meta: ['Livello B1', 'Terza media', 'CLIL History'],
+        testo: `Grande unità CLIL che collega <strong>Rivoluzione Americana, Rivoluzione Francese, schiavitù e diritti civili</strong>. Attività interattive, vocabolario storico in inglese, role play e giochi.<br><br>Include la sezione "Guess Who" con personaggi storici (in revisione per renderla più accessibile).`
+      },
+      haiti: {
+        tag: 'CLIL · RPG Storico',
+        titolo: '🌴 Survival Haiti',
+        link: 'https://paolafatigato.github.io/Survival-Haiti/',
+        meta: ['Livello B1', 'Terza media', 'Escape Room storico'],
+        testo: `RPG in stile escape room ambientato durante la <strong>Rivoluzione Haitiana a Saint-Domingue</strong> (fine 1700). Gli studenti prendono decisioni che cambiano il corso della storia — tutto in inglese.<br><br>Culminazione del grande percorso CLIL su Rivoluzione e schiavitù. Emotivamente coinvolgente e storicamente accurato.`
+      },
+      romeo: {
+        tag: 'Letteratura · Shakespeare',
+        titolo: '🌹 Romeo & Juliet Game Hub',
+        link: 'https://paolafatigato.github.io/RomeoGame/',
+        meta: ['Livello B1', 'Seconda media', '8 mini-giochi'],
+        testo: `Hub con <strong>8 mini-giochi su Romeo e Giulietta</strong> di Shakespeare, progettato per seconda media. Copre vocabolario, trama, personaggi, citazioni e temi in inglese.<br><br>Sistema a squadre (2–4 team) con palette di colori personalizzata. Permette di avvicinarsi a Shakespeare in modo giocoso.`
+      },
+      pagesoffate: {
+        tag: 'Card Game · Multiplayer',
+        titolo: '🃏 Pages of Fate Arena',
+        link: 'https://paolafatigato.github.io/PagesofFate-Arena/',
+        meta: ['Livello B1', 'Seconda / Terza media', 'In sviluppo: Firebase co-op'],
+        testo: `<strong>Battle card game multiplayer</strong> per la classe: gli studenti si sfidano usando carte di grammatica e vocabolario. Ogni carta ha effetti diversi sulla partita.<br><br><em>In sviluppo:</em> integrazione Firebase per giocare in contemporanea da dispositivi diversi, opzione "redraw" selettivo e sistema anti-ripetizioni.`
+      },
+      emotions: {
+        tag: 'CBT · Emozioni · CLIL',
+        titolo: '💚 Emotions',
+        link: 'https://paolafatigato.github.io/emotions/',
+        meta: ['Livello A2', 'Prima media', 'Neuroscienza + CBT'],
+        testo: `Sito multi-attività che combina <strong>apprendimento dell'inglese e benessere emotivo</strong>. Sezioni:<ul><li>Emotion Wheel interattiva</li><li>Sentence Dice (lancio dado + frase)</li><li>Tic-Tac-Toe sulle emozioni</li><li>Compare! (comparativi in contesto)</li><li>Emotion Journal</li><li>Match It</li></ul>Parte dell'unità "Feel It, Name It, Tame It".`
+      },
+      toxic: {
+        tag: 'PSE · Relazioni sane',
+        titolo: '💘 Toxic Love',
+        link: 'https://paolafatigato.github.io/Unhealty-Love-/',
+        meta: ['Livello B1', 'Seconda / Terza media', 'Basato su Lundy Bancroft'],
+        testo: `Lezione interattiva su <strong>relazioni sane e tossiche</strong>: come riconoscere i red flag, i tipi di manipolazione e come rispondere. Basato sul lavoro di Lundy Bancroft.<br><br>Include: gioco del semaforo (verde/giallo/rosso), matching dei tipi di manipolatore, decoder delle scuse. Spesso crea momenti di riflessione personale molto profondi.`
+      },
+      scienceteaching: {
+        tag: 'Neuroscienza · Study skills',
+        titolo: '🧠 The Science of Teaching',
+        link: 'https://paolafatigato.github.io/-science-of-teaching/',
+        meta: ['CLIL · Neuroscienza', 'Tutti gli anni', 'Metacognizione'],
+        testo: `Lezione CLIL interattiva su <strong>come funziona la memoria e l'apprendimento</strong>. Include:<ul><li>Esperimento DRM (falsi ricordi)</li><li>Spaced repetition e come applicarla</li><li>Memory Palace (metodo dei loci)</li><li>Quiz sulla scienza della pratica</li></ul>Progettata per rendere gli studenti consapevoli del proprio processo di apprendimento.`
+      },
+      goose: {
+        tag: 'Board Game · LIM',
+        titolo: '🪿 Goose Game Platform',
+        link: 'https://paolafatigato.github.io/GooseGame/',
+        meta: ['Livello A1–B1', 'Tutti gli anni', 'Multimateria'],
+        testo: `Versione digitale del gioco dell'oca per LIM con <strong>categorie tematiche personalizzabili</strong>: Witch Hunt, storia dei fiumi, Leopardi, "Getting to know you" e altro ancora.<br><br>Sistema a due livelli di variabili CSS per il theming. Domande a scelta multipla con feedback immediato. I giocatori si muovono sulla tavola in base alle risposte corrette.`
+      },
+      sarabanda: {
+        tag: 'Music Quiz · Ascolto',
+        titolo: '🎵 Sarabanda Edition',
+        link: 'https://paolafatigato.github.io/Sarabanda/',
+        meta: ['Ascolto attivo', 'Tutti gli anni', '17 canzoni italiane + inglesi'],
+        testo: `Quiz musicale ispirato alla trasmissione Sarabanda: <strong>17 canzoni</strong> tra italiano e inglese, due fasi di gioco (testo libero + scelta multipla) con timer.<br><br>Ogni canzone ha pulsanti integrati per Spotify e YouTube. Perfetto come warm-up, per fine unità o come premio. Database facilmente espandibile.`
+      },
+      classmanager: {
+        tag: 'Gestione classe · Firebase',
+        titolo: '🪑 Class Manager',
+        link: 'https://paolafatigato.github.io/Class-Manager/',
+        meta: ['Firebase Realtime DB', 'Docenti', 'In sviluppo'],
+        testo: `App web completa per la <strong>gestione della classe</strong>. Funzionalità principali:<ul><li>Mappa dei posti drag &amp; drop</li><li>Formazione gruppi (random, omogenei, eterogenei)</li><li>Controllo vicinanze (no ripetizioni)</li><li>Flag DSA / supporto 104</li><li>RegistroTeacher integrato con sezioni gerarchiche per verifica</li><li>Tag categorie per ogni verifica</li></ul>`
+      },
+      medieval: {
+        tag: 'CLIL · Caccia alle Streghe',
+        titolo: '🧙 Medieval Cards',
+        link: 'https://paolafatigato.github.io/Medieval-cards/#',
+        meta: ['Livello A2', 'Prima media', 'Gioco Lupus-style'],
+        testo: `Carte digitali per l'unità <strong>Witch Hunt (Caccia alle Streghe)</strong>. Quattro classi sociali medievali (nobiltà, clero, borghesia, servi della gleba) con carte personaggio illustrate.<br><br>Parte di un'unità CLIL più ampia che include sito interattivo, jigsaw activity e dialoghi grammaticali integrati. Gioco in stile Lupus.`
+      },
+      wallstreet: {
+        tag: 'CLIL · Economia storica',
+        titolo: '💸 Wall Street 1929',
+        link: 'https://paolafatigato.github.io/WallStreet29/',
+        meta: ['Livello B1', 'Terza media', 'Simulazione economica'],
+        testo: `Simulazione interattiva del <strong>crollo di Wall Street del 1929</strong> e della Grande Depressione. Gli studenti prendono decisioni economiche e ne vivono le conseguenze storiche in inglese.<br><br>Unisce storia economica, lessico finanziario di base e comprensione delle dinamiche sociali del XX secolo.`
+      },
+      food: {
+        tag: 'Grammar · Food Unit',
+        titolo: '🍎 Countable Food',
+        link: 'https://paolafatigato.github.io/countable-food/',
+        meta: ['Livello A2', 'Seconda media', 'Unità Food'],
+        testo: `Gioco interattivo su <strong>countable e uncountable nouns</strong> con vocabolario alimentare. Visuale, immediato, pensato per la LIM come supporto alla spiegazione grammaticale.<br><br>Fa parte dell'unità Food che include anche Harvard Healthy Plate, shopping list, meal planner e aggettivi indefiniti.`
+      }
+    };
+
+    function apriModal(id) {
+      const s = infoSiti[id];
+      if (!s) return;
+      document.getElementById('modalTag').textContent   = s.tag;
+      document.getElementById('modalTitle').textContent = s.titolo;
+      document.getElementById('modalLink').href          = s.link;
+      const meta = document.getElementById('modalMeta');
+      meta.innerHTML = s.meta.map(m => `<span class="modal-pill">${m}</span>`).join('');
+      document.getElementById('modalBody').innerHTML = s.testo;
+      document.getElementById('modalOverlay').classList.add('aperta');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function chiudiModal() {
+      document.getElementById('modalOverlay').classList.remove('aperta');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalClose').addEventListener('click', chiudiModal);
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) chiudiModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') chiudiModal();
+    });
+  </script>
 </body>
 </html>
