@@ -635,6 +635,72 @@
       height: 8px;
     }
 
+    /* ── Search bar siti ── */
+    .siti-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 2.2rem;
+      border: 2px solid var(--nero);
+      background: #fff;
+      max-width: 540px;
+    }
+    .siti-search-wrap:focus-within {
+      border-color: var(--rosa);
+    }
+    .siti-search-wrap .search-icon {
+      padding: 0 1rem;
+      font-size: 1rem;
+      color: #aaa;
+      pointer-events: none;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .siti-search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: .75rem .5rem .75rem 0;
+      font-family: 'Space Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      background: transparent;
+      color: var(--nero);
+    }
+    .siti-search-input::placeholder {
+      color: #bbb;
+      letter-spacing: .1em;
+    }
+    .siti-search-clear {
+      background: none;
+      border: none;
+      padding: 0 1rem;
+      color: #aaa;
+      font-size: 1rem;
+      cursor: pointer;
+      display: none;
+      line-height: 1;
+      transition: color .15s;
+    }
+    .siti-search-clear:hover { color: var(--rosa); }
+    /* risultati filtrati */
+    .siti-search-results {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 2px solid var(--nero);
+    }
+    .siti-search-results.visibile { display: grid; }
+    .no-results {
+      grid-column: 1 / -1;
+      padding: 3rem 2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: #999;
+      text-align: center;
+    }
+
     /* ── Gallery siti didattici ── */
     .siti-gallery-outer {
       display: flex;
@@ -1092,6 +1158,22 @@
       <h2 class="section-title">Siti Web Didattici</h2>
       <span class="section-subtitle">HTML · Firebase · Open Access</span>
     </div>
+
+    <!-- ── Barra di ricerca ── -->
+    <div class="siti-search-wrap">
+      <span class="search-icon" aria-hidden="true">&#9906;</span>
+      <input
+        type="search"
+        id="sitiSearchInput"
+        class="siti-search-input"
+        placeholder="CERCA PER NOME O ARGOMENTO..."
+        autocomplete="off"
+        aria-label="Cerca siti didattici"
+      >
+      <button class="siti-search-clear" id="sitiSearchClear" aria-label="Cancella ricerca">&#10005;</button>
+    </div>
+    <!-- risultati filtrati (visibili solo durante la ricerca) -->
+    <div class="siti-search-results" id="sitiSearchResults"></div>
 
     <!-- ── Gallery scacchiera ── -->
     <div class="siti-gallery-outer">
@@ -1818,6 +1900,73 @@
       btnNext.addEventListener('click', function() { if (currentPage < totalPages - 1) goToPage(currentPage + 1); });
 
       goToPage(0);
+
+      // ── Ricerca ──
+      var LIGHT_CYCLE_S = ['light-lime', 'light-viola', 'light-rosa', 'light-lime'];
+      var searchInput  = document.getElementById('sitiSearchInput');
+      var searchClear  = document.getElementById('sitiSearchClear');
+      var searchRes    = document.getElementById('sitiSearchResults');
+      var galleryOuter = document.querySelector('.siti-gallery-outer');
+      var galleryFoot  = document.querySelector('.gallery-footer');
+
+      function buildResultCell(site, idx) {
+        var isDark    = (idx % 2 === 0);
+        var lightIdx  = Math.floor(idx / 2) % LIGHT_CYCLE_S.length;
+        var cellClass = isDark ? 'dark' : LIGHT_CYCLE_S[lightIdx];
+        var cell = document.createElement('div');
+        cell.className = 'gallery-cell ' + cellClass;
+        var btn = document.createElement('button');
+        btn.className = 'cell-info-btn';
+        btn.setAttribute('aria-label', 'Info ' + site.title);
+        btn.textContent = '?';
+        (function(sid) {
+          btn.addEventListener('click', function(e) { e.stopPropagation(); apriModal(sid); });
+        })(site.id);
+        cell.appendChild(btn);
+        var link = document.createElement('a');
+        link.className = 'cell-link';
+        link.href = site.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', site.title);
+        link.innerHTML =
+          '<div class="cell-icon">' + site.icon + '</div>' +
+          '<div class="cell-tag">' + site.tag + '</div>' +
+          '<div class="cell-title">' + site.title + '</div>';
+        cell.appendChild(link);
+        return cell;
+      }
+
+      function runSearch(q) {
+        q = q.trim().toLowerCase();
+        var isSearching = q.length > 0;
+        searchClear.style.display = isSearching ? 'block' : 'none';
+        galleryOuter.style.display = isSearching ? 'none' : 'flex';
+        galleryFoot.style.display  = isSearching ? 'none' : 'flex';
+        searchRes.classList.toggle('visibile', isSearching);
+        if (!isSearching) { searchRes.innerHTML = ''; return; }
+        var hits = sitiGallery.filter(function(s) {
+          return (s.title.toLowerCase().includes(q) ||
+                  s.tag.toLowerCase().includes(q) ||
+                  s.id.toLowerCase().includes(q));
+        });
+        searchRes.innerHTML = '';
+        if (hits.length === 0) {
+          var msg = document.createElement('p');
+          msg.className = 'no-results';
+          msg.textContent = 'Nessun sito trovato per "' + q + '"';
+          searchRes.appendChild(msg);
+        } else {
+          hits.forEach(function(site, i) { searchRes.appendChild(buildResultCell(site, i)); });
+        }
+      }
+
+      searchInput.addEventListener('input', function() { runSearch(this.value); });
+      searchClear.addEventListener('click', function() {
+        searchInput.value = '';
+        searchInput.focus();
+        runSearch('');
+      });
     })();
   </script>
 </body>
