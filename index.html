@@ -124,8 +124,7 @@
       <p>Manda un messaggio, un'idea, un sorriso, un vento creativo. Ti risponderò appena possibile!</p>
       <ul class="info-contatti">
         <li><strong>📍</strong> Via della Creatività 123, Italia</li>
-        <li><strong>📞</strong> +39 333 456 7890</li>
-        <li><strong>📧</strong> paola@alvento.it</li>
+        <li><strong>📧</strong> paolaalvento@gmail.com</li>
       </ul>
       <div class="icone-social">
         <a href="#"><img src="immagini/icon-instagram.svg" alt="Instagram"></a>
@@ -138,21 +137,24 @@
     <div class="immagine-contatti"></div>
 
     <!-- Box bianco sovrapposto per form -->
-    <form class="form-contatto-box">
+    <form class="form-contatto-box" action="https://formspree.io/f/xnjwgyge" method="POST">
       <h3>Send a message</h3>
       <div class="riga">
-        <input type="text" placeholder="Name" required>
-        <input type="text" placeholder="Last" required>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="lastname" placeholder="Last" required>
       </div>
       <div class="riga">
-      <input type="email" placeholder="Email" required>
+      <input type="email" name="_replyto" placeholder="Email" required>
       </div>
       <div class="riga">
-      <input type="text" placeholder="Subject" required>
+      <input type="text" name="subject" placeholder="Subject" required>
       </div>
       <div class="riga">
-      <textarea placeholder="Comment or Message" required></textarea>
+      <textarea name="message" placeholder="Comment or Message" required></textarea>
       </div>
+      <input type="hidden" name="_subject" value="Nuovo messaggio da sito Paola al Vento">
+      <!-- Replace the _next URL with a thank-you page or an anchor to show success -->
+      <input type="hidden" name="_next" value="index.html#contatti?success=1">
       <button type="submit">Send Message</button>
     </form>
   </div>
