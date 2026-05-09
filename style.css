@@ -715,6 +715,69 @@ top: 190px;
   transform: scale(1.05);
 }
 
+/* ===== SOLD / DISCLAIMER STYLES ===== */
+.add-to-cart.sold {
+  background: rgba(255,255,255,0.92);
+  color: #bfbfbf;
+  pointer-events: none;
+  border-radius: 20px;
+  font-weight: 800;
+}
+
+.sold-disclaimer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background-color: #fff6f1;
+  border: 2px solid rgba(255,120,55,0.08);
+  padding: 28px 34px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.sold-disclaimer .sold-text h2 {
+  margin: 0 0 6px 0;
+  font-family: 'Maglite';
+  color: #e72f72;
+  font-size: 2em;
+  letter-spacing: 1px;
+}
+
+.sold-disclaimer .sold-text p {
+  margin: 0;
+  color: #2a2222;
+  font-family: 'Japandi';
+  font-size: 1.05em;
+  max-width: 640px;
+}
+
+.contattami-button {
+  background-color: #ff7837;
+  color: #fff6f1;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 25px;
+  font-size: 1em;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: 'Japandi';
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.contattami-button:hover {
+  transform: translateY(-4px);
+  background-color: #caff1d;
+  color: #2a2222;
+}
+
+@media (max-width: 720px) {
+  .sold-disclaimer { flex-direction: column; text-align: center; }
+  .sold-disclaimer .sold-text p { max-width: 100%; }
+}
+
 /*SIGILLI*/
 body.sfondo-carta {
   background-color: #fff6f1;
