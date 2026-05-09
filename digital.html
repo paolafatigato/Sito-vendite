@@ -635,18 +635,166 @@
       height: 8px;
     }
 
+    /* ── Gallery siti didattici ── */
+    .siti-gallery-outer {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      position: relative;
+    }
+    .gallery-nav {
+      background: var(--nero);
+      color: var(--crema);
+      border: none;
+      cursor: pointer;
+      width: 56px;
+      font-size: 1.4rem;
+      transition: background .2s, color .2s;
+      flex-shrink: 0;
+      font-family: 'Space Mono', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      letter-spacing: 0;
+    }
+    .gallery-nav:hover:not(:disabled) { background: var(--rosa); }
+    .gallery-nav:disabled { opacity: .18; cursor: default; }
+    .siti-gallery-viewport {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .siti-gallery-track {
+      display: flex;
+      transition: transform .52s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    .gallery-page {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .gallery-cell {
+      min-height: 240px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.07);
+    }
+    .gallery-cell.dark        { background: var(--nero); border-color: #222; }
+    .gallery-cell.light-lime  { background: var(--lime); }
+    .gallery-cell.light-viola { background: #f0d8ff; }
+    .gallery-cell.light-rosa  { background: #fce4ec; }
+    .gallery-cell.empty       {
+      background: repeating-linear-gradient(
+        45deg, #ececec 0, #ececec 1px, transparent 0, transparent 12px);
+    }
+    .gallery-cell.dark.empty  {
+      background: repeating-linear-gradient(
+        45deg, #1e1e1e 0, #1e1e1e 1px, #111 0, #111 12px);
+    }
+    .cell-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: inherit;
+      padding: 2rem 1.2rem 1.8rem;
+      height: 100%;
+      transition: transform .22s;
+      box-sizing: border-box;
+    }
+    .gallery-cell:hover .cell-link  { transform: scale(1.05); }
+    .gallery-cell.dark .cell-link   { color: var(--crema); }
+    .cell-icon  { font-size: 2.4rem; margin-bottom: .7rem; line-height: 1; }
+    .cell-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: .53rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      opacity: .65;
+      margin-bottom: .45rem;
+      text-align: center;
+    }
+    .cell-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      line-height: 1.3;
+      text-align: center;
+    }
+    .gallery-cell.dark .cell-tag   { color: var(--lime); opacity: 1; }
+    .gallery-cell.dark .cell-title { color: #fff; }
+    .cell-info-btn {
+      position: absolute;
+      top: .7rem;
+      right: .7rem;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.45);
+      background: transparent;
+      color: rgba(255,255,255,.75);
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, border-color .2s;
+      z-index: 2;
+      padding: 0;
+    }
+    .gallery-cell:not(.dark) .cell-info-btn {
+      border-color: rgba(0,0,0,.25);
+      color: rgba(0,0,0,.5);
+    }
+    .cell-info-btn:hover { background: var(--rosa); border-color: var(--rosa) !important; color: #fff !important; }
+    .gallery-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6rem;
+      margin-top: 1.8rem;
+    }
+    .gallery-dots { display: flex; gap: .7rem; align-items: center; }
+    .gallery-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ccc;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      padding: 0;
+    }
+    .gallery-dot.active { background: var(--rosa); transform: scale(1.4); }
+    .gallery-counter {
+      font-family: 'Space Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .15em;
+      color: #999;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 860px) {
       .hero-digitale { grid-template-columns: 1fr; }
       .hero-testo::after { display: none; }
       .hero-visual { min-height: 300px; }
-      .siti-lista { grid-template-columns: 1fr; }
       .adesivi-showcase { flex-direction: column; }
       .cta-finale { flex-direction: column; align-items: flex-start; }
       .cta-destra { align-items: flex-start; }
       .navbar { padding: 1rem 1.2rem; }
       .navbar nav ul { gap: 1rem; }
       .sezione-digitale { padding: 4rem 1.5rem; }
+      .gallery-nav { width: 36px; font-size: 1rem; }
+      .gallery-cell { min-height: 160px; }
+      .cell-icon { font-size: 1.7rem; }
+      .cell-title { font-size: .88rem; }
+      .cell-tag { font-size: .48rem; }
     }
   </style>
 </head>
@@ -945,7 +1093,23 @@
       <span class="section-subtitle">HTML · Firebase · Open Access</span>
     </div>
 
-    <div class="siti-lista">
+    <!-- ── Gallery scacchiera ── -->
+    <div class="siti-gallery-outer">
+      <button class="gallery-nav gallery-prev" id="galleryPrev" aria-label="Siti precedenti" disabled>&#8592;</button>
+      <div class="siti-gallery-viewport">
+        <div class="siti-gallery-track" id="galleryTrack">
+          <!-- generato da JS -->
+        </div>
+      </div>
+      <button class="gallery-nav gallery-next" id="galleryNext" aria-label="Siti successivi">&#8594;</button>
+    </div>
+    <div class="gallery-footer">
+      <div class="gallery-dots" id="galleryDots"></div>
+      <span class="gallery-counter" id="galleryCounter"></span>
+    </div>
+
+    <!-- INIZIO BLOCCO DA RIMUOVERE — tenuto solo per compatibilità modale, verrà nascosto -->
+    <div class="siti-lista" style="display:none;">
 
       <!-- ── GIOCHI DI GRAMMATICA & VOCABOLARIO ── -->
       <div class="siti-gruppo-label">🎮 Giochi di grammatica &amp; vocabolario</div>
@@ -1535,6 +1699,126 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') chiudiModal();
     });
+
+    // ── Gallery Siti Didattici 3×3 ──
+    (function () {
+      var sitiGallery = [
+        { id:'never',          icon:'🙅', title:'Never Have I Ever',          tag:'Speaking · A2–B1',          url:'https://paolafatigato.github.io/Never-ever/' },
+        { id:'bomb',           icon:'💣', title:'Bomb Game',                  tag:'Vocabulary · A1–B1',         url:'https://paolafatigato.github.io/Bomb-game/' },
+        { id:'tombola',        icon:'🎱', title:'Word Tombola',               tag:'Review · A1–A2',             url:'https://paolafatigato.github.io/codeTombolaWords/' },
+        { id:'hangman',        icon:'😊', title:'Personality Hangman',        tag:'Vocabulary · A2',            url:'https://paolafatigato.github.io/Personality-vocabulary-game/' },
+        { id:'alphabetwheel',  icon:'🎡', title:'Alphabet Wheel',             tag:'Vocabulary · A1',            url:'https://paolafatigato.github.io/AlphabetWheel/' },
+        { id:'mimeorlie',      icon:'🤫', title:'Mime or Lie',                tag:'Speaking · A2',              url:'https://paolafatigato.github.io/MimeOrLie/' },
+        { id:'fakeactors',     icon:'🎭', title:'Fake Actors',                tag:'Drama · B1',                 url:'https://paolafatigato.github.io/Fake-actors/' },
+        { id:'mathmarket',     icon:'🧮', title:'Math Market',                tag:'CLIL · Matematica',          url:'https://paolafatigato.github.io/Math-Market/' },
+        { id:'paradigms',      icon:'📚', title:'Paradigms',                  tag:'Grammar · A2–B1',            url:'https://paolafatigato.github.io/Paradigms/' },
+        { id:'basket',         icon:'🏀', title:'Paradigms Basket',           tag:'Grammar · A2',               url:'https://paolafatigato.github.io/paradigmsBasket/' },
+        { id:'pronouns',       icon:'🔗', title:'Pronouns & Relatives',       tag:'Grammar · A2',               url:'https://paolafatigato.github.io/Pronouns/' },
+        { id:'grammarbase',    icon:'📝', title:'Pronouns & Present Simple',  tag:'Grammar · A1',               url:'https://paolafatigato.github.io/Grammar-base/' },
+        { id:'revolutions',    icon:'⛓️', title:'Revolutions',                tag:'CLIL · Storia · B1',         url:'https://paolafatigato.github.io/revolutions/' },
+        { id:'haiti',          icon:'🌴', title:'Survival Haiti',             tag:'CLIL · RPG · B1',            url:'https://paolafatigato.github.io/Survival-Haiti/' },
+        { id:'romeo',          icon:'🌹', title:'Romeo & Juliet Hub',         tag:'Letteratura · B1',           url:'https://paolafatigato.github.io/RomeoGame/' },
+        { id:'pagesoffate',    icon:'🃏', title:'Pages of Fate Arena',        tag:'Card Game · B1',             url:'https://paolafatigato.github.io/PagesofFate-Arena/' },
+        { id:'emotions',       icon:'💚', title:'Emotions',                   tag:'CBT · Emozioni · A2',        url:'https://paolafatigato.github.io/emotions/' },
+        { id:'toxic',          icon:'💘', title:'Toxic Love',                 tag:'PSE · Relazioni · B1',       url:'https://paolafatigato.github.io/Unhealty-Love-/' },
+        { id:'scienceteaching',icon:'🧠', title:'The Science of Teaching',    tag:'Neuroscienza · CLIL',        url:'https://paolafatigato.github.io/-science-of-teaching/' },
+        { id:'goose',          icon:'🪿', title:'Goose Game Platform',        tag:'Board Game · A1–B1',         url:'https://paolafatigato.github.io/GooseGame/' },
+        { id:'sarabanda',      icon:'🎵', title:'Sarabanda Edition',          tag:'Music Quiz · Listening',     url:'https://paolafatigato.github.io/Sarabanda/' },
+        { id:'classmanager',   icon:'🪑', title:'Class Manager',              tag:'Gestione Classe',            url:'https://paolafatigato.github.io/Class-Manager/' },
+        { id:'medieval',       icon:'🧙', title:'Medieval Cards',             tag:'CLIL · Medioevo · A2',       url:'https://paolafatigato.github.io/Medieval-cards/#' },
+        { id:'wallstreet',     icon:'💸', title:'Wall Street 1929',           tag:'CLIL · Economia · B1',       url:'https://paolafatigato.github.io/WallStreet29/' },
+        { id:'food',           icon:'🍎', title:'Countable Food',             tag:'Grammar · Food · A2',        url:'https://paolafatigato.github.io/countable-food/' }
+      ];
+
+      var PER_PAGE    = 9;
+      var LIGHT_CYCLE = ['light-lime', 'light-viola', 'light-rosa', 'light-lime'];
+      var total       = sitiGallery.length;
+      var totalPages  = Math.ceil(total / PER_PAGE);
+      var currentPage = 0;
+
+      var track   = document.getElementById('galleryTrack');
+      var dotsEl  = document.getElementById('galleryDots');
+      var counter = document.getElementById('galleryCounter');
+      var btnPrev = document.getElementById('galleryPrev');
+      var btnNext = document.getElementById('galleryNext');
+      if (!track) return;
+
+      // Costruisce le pagine
+      for (var p = 0; p < totalPages; p++) {
+        var pageEl = document.createElement('div');
+        pageEl.className = 'gallery-page';
+        var lightIdx = 0;
+
+        for (var i = 0; i < PER_PAGE; i++) {
+          var siteIdx = p * PER_PAGE + i;
+          var site    = siteIdx < total ? sitiGallery[siteIdx] : null;
+          var isDark  = (i % 2 === 0);
+          var cellClass = isDark ? 'dark' : LIGHT_CYCLE[lightIdx++ % LIGHT_CYCLE.length];
+
+          var cell = document.createElement('div');
+          cell.className = 'gallery-cell ' + cellClass + (site ? '' : ' empty');
+
+          if (site) {
+            // Pulsante info (apre modal)
+            var btn = document.createElement('button');
+            btn.className = 'cell-info-btn';
+            btn.setAttribute('aria-label', 'Info ' + site.title);
+            btn.textContent = '?';
+            (function(sid) {
+              btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                apriModal(sid);
+              });
+            })(site.id);
+            cell.appendChild(btn);
+
+            // Link al sito
+            var link = document.createElement('a');
+            link.className = 'cell-link';
+            link.href = site.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.setAttribute('aria-label', site.title);
+            link.innerHTML =
+              '<div class="cell-icon">' + site.icon + '</div>' +
+              '<div class="cell-tag">' + site.tag + '</div>' +
+              '<div class="cell-title">' + site.title + '</div>';
+            cell.appendChild(link);
+          }
+
+          pageEl.appendChild(cell);
+        }
+        track.appendChild(pageEl);
+      }
+
+      // Crea i pallini
+      for (var q = 0; q < totalPages; q++) {
+        var dot = document.createElement('button');
+        dot.className = 'gallery-dot';
+        dot.setAttribute('aria-label', 'Pagina ' + (q + 1));
+        (function(pg) {
+          dot.addEventListener('click', function() { goToPage(pg); });
+        })(q);
+        dotsEl.appendChild(dot);
+      }
+
+      function goToPage(p) {
+        currentPage = p;
+        track.style.transform = 'translateX(-' + (p * 100) + '%)';
+        var dots = dotsEl.querySelectorAll('.gallery-dot');
+        for (var d = 0; d < dots.length; d++) dots[d].classList.toggle('active', d === p);
+        btnPrev.disabled = (p === 0);
+        btnNext.disabled = (p === totalPages - 1);
+        var from = p * PER_PAGE + 1;
+        var to   = Math.min((p + 1) * PER_PAGE, total);
+        counter.textContent = from + '\u2013' + to + ' di ' + total;
+      }
+
+      btnPrev.addEventListener('click', function() { if (currentPage > 0) goToPage(currentPage - 1); });
+      btnNext.addEventListener('click', function() { if (currentPage < totalPages - 1) goToPage(currentPage + 1); });
+
+      goToPage(0);
+    })();
   </script>
 </body>
 </html>
