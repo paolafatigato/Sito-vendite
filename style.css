@@ -192,10 +192,16 @@ nav a {
   margin-left: 20px;
   align-content: stretch;
   align-self: stretch;
+  text-decoration: none; /* rimuove sottolineatura per il link SHOP NOW */
 }
 
 .shop-now-layout:hover {
   font-size: 3.1em; /* leggero ingrandimento del testo */
+}
+
+/* Rimuove sottolineatura dalle icone social */
+.icone-social a {
+  text-decoration: none;
 }
 
 
