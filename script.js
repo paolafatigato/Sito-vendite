@@ -3,10 +3,37 @@ let i = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   const novit = document.getElementById("novit");
+  if (!novit) return;
 
   document.body.addEventListener("click", () => {
     i = (i + 1) % colori.length;
     novit.style.setProperty('--stellina-colore', colori[i]);
+  });
+});
+
+// ── Hamburger menu toggle ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.hamburger').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = btn.closest('.navbar').querySelector('nav');
+      if (nav) {
+        nav.classList.toggle('aperto');
+        btn.setAttribute('aria-expanded', nav.classList.contains('aperto'));
+        btn.textContent = nav.classList.contains('aperto') ? '✕' : '☰';
+      }
+    });
+  });
+  // Close menu when a link inside is clicked
+  document.querySelectorAll('.navbar nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      const nav = link.closest('nav');
+      if (nav) {
+        nav.classList.remove('aperto');
+        const btn = nav.closest('.navbar').querySelector('.hamburger');
+        if (btn) { btn.textContent = '☰'; btn.setAttribute('aria-expanded', 'false'); }
+      }
+    });
   });
 });
 

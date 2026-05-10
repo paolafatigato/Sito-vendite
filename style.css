@@ -908,3 +908,238 @@ body.sfondo-carta {
   background-color: #caff1d;  /* verde limone */
   color: #2a2222;
 }
+
+
+/* =============================================
+   RESPONSIVE — HAMBURGER + TABLET + MOBILE
+   ============================================= */
+
+/* ── Hamburger button (hidden on desktop) ── */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.7em;
+  cursor: pointer;
+  color: inherit;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+/* Hamburger color fix for light-on-dark navbars */
+#navbar2 .hamburger { color: #ffece0; }
+
+
+/* ── TABLET (769px – 1024px) ── */
+@media (max-width: 1024px) {
+  .titolo-paola        { font-size: 6em; }
+  .sottotitolo         { font-size: 2.8em; }
+  .titolo-section      { font-size: 3.5em; }
+  .sottotitolo-section { font-size: 1.2em; }
+
+  /* About me */
+  .about-me-img  { width: 380px; height: 380px; margin-top: 60px; }
+  .about-me-text { font-size: 1.1em; }
+
+  /* Fusion gallery: wrap instead of single fixed-height row */
+  .fusion-gallery {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 30px;
+  }
+  .fusion-gallery .card-fusion {
+    flex: 1 1 44%;
+    min-height: 240px;
+    background-size: cover !important;
+  }
+
+  /* Sigilli */
+  .sigilli-gallery { flex-wrap: wrap; }
+
+  /* Contacts */
+  .contenitore-contatti { height: auto; flex-direction: column; }
+  .colonna-sinistra     { max-width: 100%; flex: none; }
+  .colonna-sinistra p   { max-width: 100%; }
+  .immagine-contatti    { display: none; }
+  .form-contatto-box {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 40px 30px;
+    box-sizing: border-box;
+    right: auto;
+    top: auto;
+  }
+
+  /* Slides */
+  .layout-ppt { gap: 40px; padding: 30px; }
+  .layout-ppt .blocco-immagini,
+  .layout-ppt .blocco-nero { max-width: 70vw; }
+}
+
+
+/* ── MOBILE (max 768px) ── */
+@media (max-width: 768px) {
+
+  /* ── Navbar / hamburger ── */
+  .navbar {
+    flex-wrap: wrap;
+    padding: 14px 20px;
+  }
+  .hamburger { display: block; }
+  .navbar > nav {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .navbar > nav.aperto { max-height: 500px; }
+  nav ul {
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 0 8px;
+    align-items: flex-start;
+  }
+  nav a { font-size: 1em; }
+
+  /* ── Homepage titles ── */
+  .titolo-paola    { font-size: 3.2em; margin-top: 10px; }
+  .sottotitolo     { font-size: 1.6em; margin-top: -6px; }
+  .titolo-section  { font-size: 2.2em; }
+  .sottotitolo-section { font-size: 0.95em; letter-spacing: 0.5px; }
+
+  /* ── Product circles ── */
+  .contenitore-sezione-prodotti {
+    flex-direction: column;
+    align-items: center;
+  }
+  .sezione-prodotti { gap: 10px; }
+  .prodotto {
+    flex: 1 1 clamp(110px, 40vw, 170px);
+    margin: 14px 5px;
+  }
+  /* Shop now: horizontal bar on mobile */
+  .shop-now-layout {
+    writing-mode: horizontal-tb;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+    font-size: 1.5em;
+    margin-left: 0;
+    align-self: auto;
+  }
+
+  /* ── About me ── */
+  .about-me-in {
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px 40px;
+  }
+  .about-me-img {
+    width: 100%;
+    max-width: 280px;
+    height: 280px;
+    margin-top: 20px;
+    align-self: center;
+  }
+  .about-me-text {
+    padding: 0 10px;
+    font-size: 1em;
+    max-width: 100%;
+  }
+  .about-me-title  { font-size: 2.6em; margin-top: 10px; }
+  .rettangolo-sotto { display: none; }
+
+  /* ── Contacts section ── */
+  .contenitore-contatti { flex-direction: column; height: auto; }
+  .colonna-sinistra {
+    max-width: 100%;
+    flex: none;
+    padding: 30px 20px;
+  }
+  .colonna-sinistra p   { max-width: 100%; }
+  .immagine-contatti    { display: none; }
+  .form-contatto-box {
+    position: static;
+    transform: none;
+    width: calc(100% - 40px);
+    max-width: 100%;
+    margin: 0 20px 40px;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    right: auto;
+    top: auto;
+  }
+  .form-contatto-box .riga { flex-direction: column; }
+
+  /* ── Fusion gallery (agendine) ── */
+  .fusion-gallery {
+    flex-direction: column;
+    height: auto;
+    padding: 16px;
+    gap: 0.6rem;
+  }
+  .fusion-gallery .card-fusion {
+    flex: none;
+    width: 100%;
+    height: 260px;
+    border-radius: 0.75rem;
+    background-size: cover !important;
+  }
+  /* Always show card content on touch screens */
+  .fusion-gallery .card-fusion .card-content {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .fusion-gallery .card-fusion .add-to-cart {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ── Sigilli gallery ── */
+  .sigilli-gallery {
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    gap: 30px;
+  }
+
+  /* ── Product detail ── */
+  .dettaglio-prodotto {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+  .foto-prodotto-acquisto {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+  .dati-prodotto-acquisto { max-width: 100%; }
+
+  /* ── Slides page ── */
+  .layout-ppt {
+    flex-direction: column;
+    min-height: auto;
+    gap: 0;
+    padding: 20px;
+  }
+  .layout-ppt .blocco-immagini,
+  .layout-ppt .blocco-nero {
+    max-width: 100%;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    flex-grow: 0;
+  }
+
+  /* ── Sold disclaimer ── */
+  .sold-disclaimer {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  .sold-disclaimer .sold-text p { max-width: 100%; }
+}
